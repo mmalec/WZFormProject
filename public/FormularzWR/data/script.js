@@ -1,3 +1,4 @@
+//to jest zmiana
 $(document).ready(function() {
 	// alert("dziala dfsdsdsdsd");
 	$("#komentarz").text("dziala Jq");
@@ -97,7 +98,7 @@ function zaladuj_protokol(nr_protokolu) {
 	$("#tables_object" + nr_protokolu).load(
 			'data/object_protocol.html',
 			function() {
-				console.log("£aduje protokow nr=" + nr_protokolu);
+				console.log("ï¿½aduje protokow nr=" + nr_protokolu);
 				pokarz_wybrane_wiersze_w_tabeli();
 				$("div.editable").click(make_div_editable);
 
@@ -105,7 +106,7 @@ function zaladuj_protokol(nr_protokolu) {
 						pokarz_wybrane_wiersze_w_tabeli);
 				console.log("koncze ladowanie protokolu nr=" + nr_protokolu);
 
-				console.log("zaczynam nieniaæ nazwy id");
+				console.log("zaczynam nieniaï¿½ nazwy id");
 
 				$("#tables_object" + nr_protokolu).find("select").each(
 						function() {
@@ -397,7 +398,7 @@ function oblicz_watrosci_wymagane() {
 		// obliczenia dla PM i IN
 		console.log("Obliczenia dla PM");
 		var gestosc_obciazenia_ogniowego = get_gObciazenia_Ogniowego(nr_protokolu);
-		console.log("Gêstoœæ OO = " + gestosc_obciazenia_ogniowego);
+		console.log("Gï¿½stoï¿½ï¿½ OO = " + gestosc_obciazenia_ogniowego);
 
 		if(liczba_kondygnacji_naziemnych == 1){
 			console.log("ustawiam wysokosc_budynku na J"); 
@@ -424,7 +425,7 @@ function oblicz_watrosci_wymagane() {
 		$('#pokrycie_dachu_wymagana' + nr_protokolu).text(
 				wymogi_elementow[klasa_odpornosci_pozarowej]["PD"]);
 
-	 //koniec obliczeñ dla PM
+	 //koniec obliczeï¿½ dla PM
 		
 		
 	} else if ((kategoria_objektu.length > 0) && (wysokosc_budynku.length > 0)) {
