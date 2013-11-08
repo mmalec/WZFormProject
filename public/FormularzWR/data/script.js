@@ -1,4 +1,4 @@
-//to jest zmiana
+//to jest zmiana II
 $(document).ready(function() {
 	// alert("dziala dfsdsdsdsd");
 	$("#komentarz").text("dziala Jq");
