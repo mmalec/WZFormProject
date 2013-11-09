@@ -15,3 +15,4 @@
 /tmp
 /nbproject/
 !/db/development.sqlite3
+/HTML5Application/nbproject/private/

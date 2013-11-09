@@ -83,7 +83,7 @@ li.wybrany{
 }
 
 li.dynamic{
-	font-weight: lighter; !important
+	font-weight: lighter; /*!important*/
 }
 
 li.header{
@@ -190,9 +190,7 @@ table.dynamic{
 	
 }
 
- {
-	
-}
+ 
  tr.wybrany{
 	background-color: inactiveborder;
 	
@@ -208,7 +206,7 @@ table.dynamic{
 
 
 select{
-s
+
 }
 
 td.podpisy{
@@ -296,7 +294,7 @@ p{
 	/* background-color: red; */
 	margin-top: 0px; 
 	margin-bottom: 0px; 
-	line-spacing:single"> 
+	/* line-spacing: single; */
 	
 }
 
@@ -311,7 +309,7 @@ textarea {
 
 div.editable {
 	vertical-align: top;
-	height: 10 px;
+	height: 40%;
 	background-color: white;
 	
 	
