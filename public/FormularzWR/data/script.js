@@ -31,7 +31,7 @@ $(document).ready(function() {
     $(".edytuj_protokol_button").click(edytuj_protokol);
 
     // $(".editable").ckedit();
-    $("div.editable").click(make_div_editable);
+
 
     $("#komentarz").text("działa aaaaaaaaaaaaaaaaa");
 
@@ -54,10 +54,21 @@ $(document).ready(function() {
         $("#spis_tresci_more").hide("slow");
     });
 
+    $("div.editable").click(make_div_editable);
+
 });
 
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
-    console.log('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
+    alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
+    var tabela_objektu = $("#objekt_nr").clone();
+    tabela_objektu.attr("id", "objekt_nr-"+nr_wiersza);
+    alert("clon = " + tabela_objektu.attr("id"));
+    
+     var ostatni = $("#pojemnik_na_objekty").find("div.object").last();
+     
+   tabela_objektu.insertAfter(ostatni);
+
+    /*
     $("#list_of_objects").find("tr").last().after(
             '<tr  id="wiersz_nr' + nr_wiersza + '" class="protocol' + nr_wiersza + '"></tr>');
     $("#list_of_objects")
@@ -85,7 +96,7 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
                 $("#edytuj_protokol_button" + nr_wiersza).click(
                         edytuj_protokol);
 
-            });
+            });*/
 
     zaladuj_protokol(nr_wiersza);
     zmiana_odnosnikow_spisu_tresci(nr_wiersza);
@@ -104,8 +115,8 @@ function zaladuj_protokol(nr_protokolu) {
                 $("input[type=checkbox]").change(
                         pokarz_wybrane_wiersze_w_tabeli);
                 console.log("koncze ladowanie protokolu nr=" + nr_protokolu);
-                
-               
+
+
 
                 console.log("zaczynam nienia� nazwy id");
 
@@ -150,13 +161,13 @@ function zaladuj_protokol(nr_protokolu) {
                             $(this).attr("id", nowe_id);
                         });
 
-                $("#data_kontroli" + nr_protokolu).datepicker(
+                $("#data_kontroli-" + nr_protokolu).datepicker(
                         $.datepicker.regional["pl"]);
 
-                $("#data_wykonania_decyzji" + nr_protokolu).datepicker(
+                $("#data_wykonania_decyzji-" + nr_protokolu).datepicker(
                         $.datepicker.regional["pl"]);
 
-                $("#tables_object" + nr_protokolu).find("input[type=checkbox]")
+                $("#tables_object-" + nr_protokolu).find("input[type=checkbox]")
                         .change(pokarz_wybrane_wiersze_w_tabeli);
 
 
@@ -168,13 +179,13 @@ function zaladuj_protokol(nr_protokolu) {
                 // );
                 // $("#rodzaj_objektu"+nr_protokolu).attr("nr_protokolu"
                 // ,"protocol"+nr_protokolu );
-               
+
                 //   $("#wysokosc_budkunku-" + nr_protokolu).attr("nr_protokolu",
                 //         nr_protokolu);
                 $('#wysokosc_budkunku-' + nr_protokolu).change(
                         oblicz_watrosci_wymagane);
-                
-                
+
+
 
                 //  $("#liczba_kondyg_nadziemnych_instniejaca-" + nr_protokolu).attr("nr_protokolu",
                 //         nr_protokolu);
@@ -193,7 +204,7 @@ function zaladuj_protokol(nr_protokolu) {
                 // ,"kategoria_objektuII"+nr_protokolu );
                 //   $("#kategoria_objektuII-" + nr_protokolu).attr("nr_protokolu",
                 //          nr_protokolu);
-                
+
 
                 $("#objects_protocols > div").addClass("ukryty_protokol");
                 $("#tables_object" + nr_protokolu).removeClass(
@@ -212,88 +223,99 @@ function zaladuj_protokol(nr_protokolu) {
                             // console.log("wpisalem nazwe ob " + nr_protokolu);
                         });
 
-                dodanie_wiersza_rodzaju_objektu(nr_protokolu,1);
+                dodanie_wiersza_rodzaju_objektu(nr_protokolu, 1);
 
                 $("#dodaj_wiersz_rodzaju_objektu-" + nr_protokolu).click(klick_dodanie_wiersza_rodzaju_objektu);
                 //uswienie pierwszego wiersza w protokole
                 //teraz selecty w rodzaju obiektu
-                                       
-                        
-               
-                        
-                
+
+
+
+
+
 
             });
 
 }
 
 
-function klick_dodanie_wiersza_rodzaju_objektu(){
+function klick_dodanie_wiersza_rodzaju_objektu() {
     //numer protokolu z id guzika
     var nr_protokolu = parseInt($(this).attr("id").toString().split("").pop());
     alert("nr protokolu = " + nr_protokolu);
-    var nr_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").toString().split("").pop());
-    dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza+1);
-    
+    var nr_wiersza = parseInt($("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id").toString().split("").pop());
+    dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza + 1);
+
 }
 
-function powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza){
-    alert("Wizanie selekow " + nr_protokolu +" nr wiersza " + nr_wiersza);
-    
+function powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza) {
+    alert("Wizanie selekow " + nr_protokolu + " nr wiersza " + nr_wiersza);
+
     //$("#rodzaj_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
-   // $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
+    // $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
     //$("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
-    
-     $("#rodzaj_objektu-" + nr_protokolu+"-"+nr_wiersza).chained(
-                        "#grupa_objektow-" + nr_protokolu+"-"+nr_wiersza);                
-                $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).chained(
-                        "#rodzaj_objektu-"  + nr_protokolu+"-"+nr_wiersza);
-               // $("#kategoria_objektuII-" + nr_protokolu).chained(
-                //        "#rodzaj_objektu-" + nr_protokolu);
-                //$("#kategoria_objektuII-" + nr_protokolu).change(
-                  //      zmiana_rodzaju_obiektuII);
-              
+
+    $("#rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza).chained(
+            "#grupa_objektow-" + nr_protokolu + "-" + nr_wiersza);
+    $("#kategoria_objektu-" + nr_protokolu + "-" + nr_wiersza).chained(
+            "#rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza);
+    // $("#kategoria_objektuII-" + nr_protokolu).chained(
+    //        "#rodzaj_objektu-" + nr_protokolu);
+    //$("#kategoria_objektuII-" + nr_protokolu).change(
+    //      zmiana_rodzaju_obiektuII);
+   
+
 
 }
 
 function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
-    alert("dziala dodawanie wiersza rodzaju objektu");
+   console.log("dziala dodawanie wiersza rodzaju objektu");
     //var nr_protokolu = $(this).attr("id").toString().split("-")[1];
-    console.log("Nr protokolu = " +nr_protokolu);
+    console.log("Nr protokolu = " + nr_protokolu);
     //var kopia_ostatniego_wiersza = $("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().clone();
     //console.log("kopia ostatniego wiersza = " + kopia_ostatniego_wiersza);
     //var ostatni_wiersz = $("#dane_dot_kontroli-"+nr_protokolu).find("tr").last();
-   // var nr_ostatniego_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").split("").pop());
+    // var nr_ostatniego_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").split("").pop());
     //dodawanie wiersza
-   // kopia_ostatniego_wiersza.insertAfter(ostatni_wiersz);
-   // var nr_ostatniego_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").split("").pop());
-   // var nr_kolejnego_wiersz = nr_ostatniego_wiersza+1;
-   var nowy_wiersz = $("#wiersz_wyboru_rodzaju_objektu").clone();
-   alert("Klonuje wierszz");
-   var ostatni_wiersz =   $("#dane_dot_kontroli-"+nr_protokolu).find("tr").last();
-   nowy_wiersz.insertAfter(ostatni_wiersz);
-   //wpisywanie w tabelce na gorze
-  
-    $("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id","wiersz_wyboru_rodzaju_objektu-"+nr_protokolu+"-"+nr_wiersza);
+    // kopia_ostatniego_wiersza.insertAfter(ostatni_wiersz);
+    // var nr_ostatniego_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").split("").pop());
+    // var nr_kolejnego_wiersz = nr_ostatniego_wiersza+1;
+    var nowy_wiersz = $("#wiersz_wyboru_rodzaju_objektu").clone();
+   // alert("Klonuje wierszz");
+    var ostatni_wiersz = $("#dane_dot_kontroli-" + nr_protokolu).find("tr").last();
+    nowy_wiersz.insertAfter(ostatni_wiersz);
+    //wpisywanie w tabelce na gorze
+
+    $("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id", "wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza);
+     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu  + "-" + nr_wiersza).find("div").last().attr("id", "opis_wiersza_rodzaju_budynku_budynku-" + nr_protokolu + "-" + nr_wiersza);
+     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu  + "-" + nr_wiersza).find("div").last().click(make_div_editable);
+    
     //teraz selecty
-      $("#wiersz_wyboru_rodzaju_objektu-"+nr_protokolu+"-"+nr_wiersza).find("select").each(
-                        function() {
-                            console.log("zaczynam zmieniac id dla selectow w rodzaju objektu");
-                            var stare_id = $(this).attr("id").split("-")[0];
-                            var nowe_id = stare_id + "-" + nr_protokolu+"-"+nr_wiersza;
-                            alert("stare id " + stare_id + " nowe_id" + nowe_id);
-                            $(this).attr("id", nowe_id);
-                        });
-                              
-                    
-     powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza);
-     if(nr_wiersza === 1)    {
-            $("#rodzaj_objectu-"+nr_protokolu).html("<div id=\"wynik_rodzaj_objektu-"+nr_protokolu+"-"+nr_wiersza+"\">--</div>");
-       }
-       else{
-           var poprzedni_wiersz = parseInt(nr_wiersza)-1;
-            $("#wynik_rodzaj_objektu-"+nr_protokolu+"-"+poprzedni_wiersz).after("<div id=\"wynik_rodzaj_objektu-"+nr_protokolu+"-"+nr_wiersza+"\">--</div>");
-       }
+    $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("select").each(
+            function() {
+                console.log("zaczynam zmieniac id dla selectow w rodzaju objektu");
+                var stare_id = $(this).attr("id").split("-")[0];
+                var nowe_id = stare_id + "-" + nr_protokolu + "-" + nr_wiersza;
+                console.log("stare id " + stare_id + " nowe_id" + nowe_id);
+                $(this).attr("id", nowe_id);
+            });
+
+
+    powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza);
+    if (nr_wiersza === 1) {
+        $("#rodzaj_objectu-" + nr_protokolu).html("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza +"\" class=\"wynik_rodzaj_objektu\" >--</div>");
+    }
+    else {
+        var poprzedni_wiersz = parseInt(nr_wiersza) - 1;
+        $("#wynik_rodzaj_objektu-" + nr_protokolu + "-" + poprzedni_wiersz).after("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza + "\" class=\"wynik_rodzaj_objektu\" >--</div>");
+    }
+    
+     $("#kategoria_objektu-" + nr_protokolu + "-" + nr_wiersza ).change(function(){
+        // alert("dziala");
+       // var klasa_op = $(this  "option:selected").text;
+       
+        $("#wynik_rodzaj_objektu-"+ nr_protokolu + "-" + nr_wiersza).html(this.value);
+    });
 }
 
 function zmiana_rodzaju_obiektu() {
@@ -305,17 +327,17 @@ function zmiana_rodzaju_obiektu() {
 }
 
 /*
-function zmiana_rodzaju_obiektuII() {
-
-    var nazwa = $(this).find("option:selected").text();
-    var nr_protokolu = $(this).attr("id").toString().split("-")[1].toString();
-    // alert("mienił sie II " + nazwa );
-    var stara_tresc = $("#rodzaj_objectu-" + nr_protokolu).text();
-    // alert("stara_tesc " + stara_tresc);
-    var str = stara_tresc + ",  " + nazwa;
-    $("#rodzaj_objectu-" + nr_protokolu).text(str);
-}
-*/
+ function zmiana_rodzaju_obiektuII() {
+ 
+ var nazwa = $(this).find("option:selected").text();
+ var nr_protokolu = $(this).attr("id").toString().split("-")[1].toString();
+ // alert("mienił sie II " + nazwa );
+ var stara_tresc = $("#rodzaj_objectu-" + nr_protokolu).text();
+ // alert("stara_tesc " + stara_tresc);
+ var str = stara_tresc + ",  " + nazwa;
+ $("#rodzaj_objectu-" + nr_protokolu).text(str);
+ }
+ */
 function remove_object() {
 
     // alert("dł " + $("#list_of_objects").find("tr").length );

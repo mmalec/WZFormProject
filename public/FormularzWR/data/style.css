@@ -252,6 +252,11 @@ tr.podpisy{
 	background-color: Lavender;
 }
 
+.wynik_rodzaj_objektu{
+    display: inline;
+    margin-left: 4mm;
+}
+
 @MEDIA print  {
 
 button{
