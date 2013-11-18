@@ -65,8 +65,17 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
     alert("clon = " + tabela_objektu.attr("id"));
     
      var ostatni = $("#pojemnik_na_objekty").find("div.object").last();
-     
+   tabela_objektu.addClass("protocol"+nr_wiersza);
    tabela_objektu.insertAfter(ostatni);
+   tabela_objektu.find(".dynamic").each( function() {
+
+                            console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
+                            var stare_id = $(this).attr("id");
+                            var nowe_id = stare_id +"-" + nr_wiersza;
+                            //alert("stare id " +stare_id + "nowe_id "+nowe_id);
+                            $(this).attr("id", nowe_id);
+
+   });
 
     /*
     $("#list_of_objects").find("tr").last().after(
@@ -358,8 +367,7 @@ function remove_object() {
 function add_new_object() {
     // alert("dziala");
 
-    var nrWiersza = parseInt($("#list_of_objects").find("tr").last().find("td")
-            .first().html());
+    var nrWiersza = parseInt($("#pojemnik_na_objekty").find(".object").last().attr("id").toString().split("-")[1]);
     if (nrWiersza === 10) {
         return;
     }
