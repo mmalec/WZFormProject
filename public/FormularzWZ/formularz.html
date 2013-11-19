@@ -231,6 +231,7 @@
                 <div id="wersja_przegladarki"></div>
             </div>
         </div>
+
         <form id="formularz">
             <div id="menu">
                 <div id="menu_top">
@@ -547,7 +548,10 @@
                 </div>
             </div>
 
-
+           <!-- <div id="menu_place" >
+                <button>Dodaj</button>
+                <button>Zapisza</button>
+            </div> -->
             <div id="kontener">
 
 
@@ -588,7 +592,7 @@
                     <tr>
                         <td rowspan="7">A</td>
                         <td rowspan="7">
-                            <input type="checkbox" checked="checked" name="ustawa"
+                            <input type="checkbox"   name="ustawa"
                                    >
                         </td>
                         <td rowspan="7">Art.&nbsp;23.&nbsp;1. Ustawy z dnia
@@ -598,49 +602,49 @@
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 1) </i><a href="#edn1"
                                                                         title=""> <i> [1] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 2) </i><a href="#edn2"
                                                                         title=""> <i> [2] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 3) </i><a href="#edn3"
                                                                         title=""> <i> [3] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 4) </i><a href="#edn4"
                                                                         title=""> <i> [4] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 5) </i><a href="#edn5"
                                                                         title=""> <i> [5] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 6) </i><a href="#edn6"
                                                                         title=""> <i> [6] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
                         <td><i> Art.&nbsp;23.&nbsp;ust. 2 pkt 7) </i><a href="#edn7"
                                                                         title=""> <i> [7] </i></a></td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                     </tr>
                     <tr>
@@ -671,7 +675,7 @@
                     <tr>
                         <td>C</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td colspan="3">§ 2. ust. 1 rozporządzenia Ministra Spraw
                             Wewnętrznych i&nbsp;Administracji z&nbsp;dnia 24 października 2005
@@ -695,6 +699,31 @@
                             </div></td>
                     </tr>
                 </table>
+
+                <table id="rodzaj_kontroli">
+                    <caption class="table_caption">Rodzaj kontroli (<i>wybrać właściwą</i>):</caption>
+                    <tr>
+                        <td>podstawowa</td>
+                        <td>problemowa</td>
+                        <td>doraźna</td>
+                        <td>sprawdzająca</td>
+                        <td>odbiór</td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"  ></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox"></td>
+
+                    </tr>
+                    <tr >					
+                        <td colspan="1"> <input type="checkbox"/>inna (podać jaka)</td>
+
+                        <td colspan="4"><div class="editable" contenteditable="false">&nbsp;</div></td>
+
+                    </tr></table>
 
                 <table id="kontrole_przeprowadzil">
                     <caption class="table_caption">
@@ -731,6 +760,8 @@
 
                 </table>
 
+
+
                 <table id="dane_kontrolowanego">
                     <caption class="table_caption">
                         Dane kontrolowanego:
@@ -752,34 +783,102 @@
 
 
                     </tr>
+                     <tr>
+
+                         <td colspan="2">
+                            <div>Dane osoby upoważnionej do reprezentowania lub prowadzenia spraw kontrolowanego</div>
+                            <div class="editable" contenteditable="false" id="dane_reprezuntujacego_kontrolowanego">
+                                &nbsp;
+                            </div></td>
+                     
+
+                    </tr>
 
                 </table>
 
 
-                <table id="rodzaj_kontroli">
-                    <caption class="table_caption">Rodzaj kontroli (<i>wybrać właściwą</i>):</caption>
+                <table  id="wladajacy_objektem">
+                    <caption class="table_caption">
+
+                    </caption>
                     <tr>
-                        <td>podstawowa</td>
-                        <td>problemowa</td>
-                        <td>doraźna</td>
-                        <td>sprawdzająca</td>
-                        <td>odbiór</td>
+
+                        <td><div>
+                                Faktycznie władającym budynkiem, obiektem budowlanym lub terenem
+                            </div>  </td>
 
                     </tr>
-                    <tr>
-                        <td><input type="checkbox" checked="checked"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="checkbox"></td>
-                        <td><input type="checkbox"></td>
+                     <tr>
+
+                        <td><div class="editable" contenteditable="false" >
+                                &nbsp;
+                            </div>  </td>
 
                     </tr>
-                    <tr >					
-                        <td colspan="1"> <input type="checkbox"/>inna (podać jaka)</td>
 
-                        <td colspan="4"><div class="editable" contenteditable="false">&nbsp;</div></td>
 
-                    </tr></table>
+                </table>
+                
+                 <table id="osoba_na_ktora_wydac_decyzje">
+                    <caption class="table_caption" >
+
+                    </caption>
+                    <tr>
+
+                        <td><div>
+                                Użytkownik lub właściciel na którego należy wydać decyzję 
+                            </div>  </td>
+
+                    </tr>
+                     <tr>
+
+                        <td><div class="editable" contenteditable="false" >
+                                &nbsp;
+                            </div>  </td>
+
+                    </tr>
+                </table>
+                
+                  <table id="osoby_obecne_przy_czynnosciach">
+                    <caption class="table_caption" >
+
+                    </caption>
+                    <tr>
+
+                        <td><div>
+                               Informacje, kto i w jakim charakterze był obecny przy czynnościach
+                            </div>  </td>
+
+                    </tr>
+                     <tr>
+
+                        <td><div class="editable" contenteditable="false" >
+                                &nbsp;
+                            </div>  </td>
+
+                    </tr>
+                </table>
+                
+                  <table id="inne">
+                    <caption class="table_caption" >
+
+                    </caption>
+                    <tr>
+
+                        <td><div>
+                              Inne
+                            </div>  </td>
+
+                    </tr>
+                     <tr>
+
+                        <td><div class="editable" contenteditable="false" >
+                                &nbsp;
+                            </div>  </td>
+
+                    </tr>
+                </table>
+
 
                 <table>
                     <caption class="table_caption">
@@ -789,14 +888,14 @@
                     <tr>
                         <td>a)</td>
                         <td>
-                            <input type="checkbox"  checked="checked">
+                            <input type="checkbox"   >
                         </td>
                         <td>niezgodności z przepisami przeciwpożarowymi;</td>
                     </tr>
                     <tr>
                         <td>b)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>niezgodności rozwiązań technicznych zastosowanych w
                             obiekcie budowlanym z wymaganiami ochrony przeciwpożarowej;</td>
@@ -804,7 +903,7 @@
                     <tr>
                         <td>c)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>niezgodności wykonania obiektu budowlanego z projektem
                             budowlanym - pod względem ochrony przeciwpożarowej;</td>
@@ -812,7 +911,7 @@
                     <tr>
                         <td>d)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>warunki wpływające na spełnienie wymogów bezpieczeństwa w
                             zakładzie stwarzającym zagrożenie wystąpienia poważnej awarii
@@ -821,7 +920,7 @@
                     <tr>
                         <td>e)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>wyniki rozpoznawania możliwości i warunków do prowadzenia
                             działań ratowniczych przez jednostki ochrony przeciwpożarowej;</td>
@@ -829,14 +928,14 @@
                     <tr>
                         <td>f)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>wyniki rozpoznawania innych miejscowych zagrożeń;</td>
                     </tr>
                     <tr>
                         <td>g)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>przyczyny powstania i okoliczności rozprzestrzeniania się
                             pożaru;</td>
@@ -844,7 +943,7 @@
                     <tr>
                         <td>h)</td>
                         <td>
-                            <input type="checkbox" checked="checked">
+                            <input type="checkbox"  >
                         </td>
                         <td>przyczyny powstania, okoliczności rozprzestrzenienia się
                             oraz skutki poważnej awarii przemysłowej,
@@ -862,12 +961,9 @@
                         ZL, PM, IN)</p>
 
                     <div id="list_of_object1" class="object">
-                        <select>
-                            <option value="1" class="protocol1" >bekt 1</option>
-                            <option value="1" class="protocol2" >bekt 2</option>
-                        </select>
+                        
                     </div>
-                    
+
 
 
                     <button type="button" id="dodaj_object">
@@ -1353,9 +1449,12 @@
                     </table>
 
                     <div id="objekt_nr" class="object dynamic">
+                       
                         <table >
-                            
-
+                            <caption class="table_caption">
+                                 <button id="edytuj_protokul" class="dynamic">Edytuj</button>
+                                 <button id="usun_protokul" class="dynamic">Usun</button>
+                            </caption>
 
                             <tr>
                                 <td>
@@ -1367,7 +1466,7 @@
                                     <div><input class="dynamic" id="nazwa_obiektu" type="text" required="required"/></div>
                                 </td>
                                 <td>
-                                     <div>
+                                    <div>
                                         Wysokość budynku
                                     </div>
                                     <div>
@@ -1379,13 +1478,13 @@
                                             <option value="WW">Wysokościowy</option>
                                         </select>
                                     </div>
-                                   
+
                                 </td>
                                 <td>
-                                     <div>
+                                    <div>
                                         Rodzaj budyku
                                     </div>
-                                    <div class="dynamic" id="rodzaj_objectu-">
+                                    <div class="dynamic" id="rodzaj_objectu">
 
                                     </div>
                                 </td>
@@ -1398,7 +1497,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td colspan="3">
                                     <div>Adres obiektu który podlega kontroli</div>
@@ -1411,10 +1510,10 @@
                                     </div>
                                 </td>
 
-                                
-                               
+
+
                             </tr>
-                            
+
                             <tr>
                                 <td colspan="5">
                                     <div>Komentarz:</div>

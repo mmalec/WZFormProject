@@ -27,7 +27,7 @@ $(document).ready(function() {
     dodaj_wiesz_listy_objektow(1);
 
     $("#dodaj_object").click(add_new_object);
-    $("#usun_object").click(remove_object);
+    $("#usun_object").click(klick_usun_objekt);
     $(".edytuj_protokol_button").click(edytuj_protokol);
 
     // $(".editable").ckedit();
@@ -59,59 +59,74 @@ $(document).ready(function() {
 });
 
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
-    alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
+    //alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
     var tabela_objektu = $("#objekt_nr").clone();
-    tabela_objektu.attr("id", "objekt_nr-"+nr_wiersza);
-    alert("clon = " + tabela_objektu.attr("id"));
+    tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
+    //alert("clon = " + tabela_objektu.attr("id"));
+
+    var ostatni = $("#pojemnik_na_objekty").find("div.object").last();
+    tabela_objektu.addClass("protocol" + nr_wiersza);
+    tabela_objektu.insertAfter(ostatni);
+    tabela_objektu.find(".dynamic").each(function() {
+
+        console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
+        var stare_id = $(this).attr("id");
+        var nowe_id = stare_id + "-" + nr_wiersza;
+        //alert("stare id " +stare_id + "nowe_id "+nowe_id);
+        $(this).attr("id", nowe_id);
+    });
     
-     var ostatni = $("#pojemnik_na_objekty").find("div.object").last();
-   tabela_objektu.addClass("protocol"+nr_wiersza);
-   tabela_objektu.insertAfter(ostatni);
-   tabela_objektu.find(".dynamic").each( function() {
-
-                            console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
-                            var stare_id = $(this).attr("id");
-                            var nowe_id = stare_id +"-" + nr_wiersza;
-                            //alert("stare id " +stare_id + "nowe_id "+nowe_id);
-                            $(this).attr("id", nowe_id);
-
-   });
+    $("#edytuj_protokul-"+nr_wiersza).click(przelacz_protokul);
+    $("#usun_protokul-"+nr_wiersza).click(klick_przelacz_protokul);
 
     /*
-    $("#list_of_objects").find("tr").last().after(
-            '<tr  id="wiersz_nr' + nr_wiersza + '" class="protocol' + nr_wiersza + '"></tr>');
-    $("#list_of_objects")
-            .find("tr")
-            .last()
-            .load(
-            'data/lista_objektow_nowy_wiersz.html',
-            function() {
-
-                $('#wiersz_nr' + nr_wiersza)
-                        .find('.dynamic')
-                        .each(
-                        function() {
-
-                            console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
-                            var stare_id = $(this).attr("id");
-                            var nowe_id = stare_id + nr_wiersza;
-                            //alert("stare id " +stare_id + "nowe_id "+nowe_id);
-                            $(this).attr("id", nowe_id);
-
-                        });
-
-                $('#lp' + nr_wiersza).html(nr_wiersza);
-
-                $("#edytuj_protokol_button" + nr_wiersza).click(
-                        edytuj_protokol);
-
-            });*/
+     $("#list_of_objects").find("tr").last().after(
+     '<tr  id="wiersz_nr' + nr_wiersza + '" class="protocol' + nr_wiersza + '"></tr>');
+     $("#list_of_objects")
+     .find("tr")
+     .last()
+     .load(
+     'data/lista_objektow_nowy_wiersz.html',
+     function() {
+     
+     $('#wiersz_nr' + nr_wiersza)
+     .find('.dynamic')
+     .each(
+     function() {
+     
+     console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
+     var stare_id = $(this).attr("id");
+     var nowe_id = stare_id + nr_wiersza;
+     //alert("stare id " +stare_id + "nowe_id "+nowe_id);
+     $(this).attr("id", nowe_id);
+     
+     });
+     
+     $('#lp' + nr_wiersza).html(nr_wiersza);
+     
+     $("#edytuj_protokol_button" + nr_wiersza).click(
+     edytuj_protokol);
+     
+     });*/
 
     zaladuj_protokol(nr_wiersza);
     zmiana_odnosnikow_spisu_tresci(nr_wiersza);
 
 }
 
+function klick_przelacz_protokul(){
+    var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
+    remove_object(nr_protokolu);
+}
+
+function przelacz_protokul(){
+    var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
+    alert("nr protokolu = " + nr_protokolu);
+    $(".protocol_table_part").each(function(){
+        $(this).addClass("ukryty_protokol");
+        });
+     $("#tables_object"+nr_protokolu).removeClass("ukryty_protokol");
+}
 function zaladuj_protokol(nr_protokolu) {
 
     $("#tables_object" + nr_protokolu).load(
@@ -251,14 +266,14 @@ function zaladuj_protokol(nr_protokolu) {
 function klick_dodanie_wiersza_rodzaju_objektu() {
     //numer protokolu z id guzika
     var nr_protokolu = parseInt($(this).attr("id").toString().split("").pop());
-    alert("nr protokolu = " + nr_protokolu);
+    //alert("nr protokolu = " + nr_protokolu);
     var nr_wiersza = parseInt($("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id").toString().split("").pop());
     dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza + 1);
 
 }
 
 function powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza) {
-    alert("Wizanie selekow " + nr_protokolu + " nr wiersza " + nr_wiersza);
+    //alert("Wizanie selekow " + nr_protokolu + " nr wiersza " + nr_wiersza);
 
     //$("#rodzaj_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
     // $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
@@ -272,13 +287,13 @@ function powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza) {
     //        "#rodzaj_objektu-" + nr_protokolu);
     //$("#kategoria_objektuII-" + nr_protokolu).change(
     //      zmiana_rodzaju_obiektuII);
-   
+
 
 
 }
 
 function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
-   console.log("dziala dodawanie wiersza rodzaju objektu");
+    console.log("dziala dodawanie wiersza rodzaju objektu");
     //var nr_protokolu = $(this).attr("id").toString().split("-")[1];
     console.log("Nr protokolu = " + nr_protokolu);
     //var kopia_ostatniego_wiersza = $("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().clone();
@@ -290,15 +305,15 @@ function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
     // var nr_ostatniego_wiersza = parseInt($("#dane_dot_kontroli-"+nr_protokolu).find("tr").last().attr("id").split("").pop());
     // var nr_kolejnego_wiersz = nr_ostatniego_wiersza+1;
     var nowy_wiersz = $("#wiersz_wyboru_rodzaju_objektu").clone();
-   // alert("Klonuje wierszz");
+    // alert("Klonuje wierszz");
     var ostatni_wiersz = $("#dane_dot_kontroli-" + nr_protokolu).find("tr").last();
     nowy_wiersz.insertAfter(ostatni_wiersz);
     //wpisywanie w tabelce na gorze
 
     $("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id", "wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza);
-     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu  + "-" + nr_wiersza).find("div").last().attr("id", "opis_wiersza_rodzaju_budynku_budynku-" + nr_protokolu + "-" + nr_wiersza);
-     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu  + "-" + nr_wiersza).find("div").last().click(make_div_editable);
-    
+    $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("div").last().attr("id", "opis_wiersza_rodzaju_budynku_budynku-" + nr_protokolu + "-" + nr_wiersza);
+    $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("div").last().click(make_div_editable);
+
     //teraz selecty
     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("select").each(
             function() {
@@ -312,18 +327,18 @@ function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
 
     powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza);
     if (nr_wiersza === 1) {
-        $("#rodzaj_objectu-" + nr_protokolu).html("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza +"\" class=\"wynik_rodzaj_objektu\" >--</div>");
+        $("#rodzaj_objectu-" + nr_protokolu).html("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza + "\" class=\"wynik_rodzaj_objektu\" >--</div>");
     }
     else {
         var poprzedni_wiersz = parseInt(nr_wiersza) - 1;
         $("#wynik_rodzaj_objektu-" + nr_protokolu + "-" + poprzedni_wiersz).after("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza + "\" class=\"wynik_rodzaj_objektu\" >--</div>");
     }
-    
-     $("#kategoria_objektu-" + nr_protokolu + "-" + nr_wiersza ).change(function(){
+
+    $("#kategoria_objektu-" + nr_protokolu + "-" + nr_wiersza).change(function() {
         // alert("dziala");
-       // var klasa_op = $(this  "option:selected").text;
-       
-        $("#wynik_rodzaj_objektu-"+ nr_protokolu + "-" + nr_wiersza).html(this.value);
+        // var klasa_op = $(this  "option:selected").text;
+
+        $("#wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza).html(this.value);
     });
 }
 
@@ -347,15 +362,21 @@ function zmiana_rodzaju_obiektu() {
  $("#rodzaj_objectu-" + nr_protokolu).text(str);
  }
  */
-function remove_object() {
+
+function klick_usun_objekt() {
+    var nrWiersza = parseInt($("#pojemnik_na_objekty").find(".object").last().attr("id").toString().split("-")[1]);
+    remove_object(nrWiersza);
+}
+
+function remove_object(nr_objektu) {
 
     // alert("dł " + $("#list_of_objects").find("tr").length );
-    if ($("#list_of_objects").find("tr").length > 2) {
-        var nrWiersza = $("#list_of_objects").find("tr").last().find("td")
-                .first().html();
-        var protocol_id = "tables_object" + nrWiersza;
+    if (nr_objektu > 1) {
+        // alert("dziala if");
+        $("#tables_object" + (nr_objektu - 1)).removeClass("ukryty_protokol");
+        var protocol_id = "tables_object" + nr_objektu;
         $("#" + protocol_id).html(" ");
-        $("#list_of_objects").find("tr").last().remove();
+        $("#objekt_nr-" + nr_objektu).remove();
 
     }
 
