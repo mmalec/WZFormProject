@@ -44,7 +44,7 @@ $(document).ready(function() {
     //
 
     // spis tre�ci
-    $("#menu_top").mouseenter(function() {
+    $("#spis_tresci_top").mouseenter(function() {
         // alert("mouse entr");
         $("#spis_tresci_more").show("slow");
     });
@@ -64,7 +64,7 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
     tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
     //alert("clon = " + tabela_objektu.attr("id"));
 
-    var ostatni = $("#pojemnik_na_objekty").find("div.object").last();
+    var ostatni = $("#pojemnik_na_objekty").find(".object").last();
     tabela_objektu.addClass("protocol" + nr_wiersza);
     tabela_objektu.insertAfter(ostatni);
     tabela_objektu.find(".dynamic").each(function() {
@@ -76,51 +76,42 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
         $(this).attr("id", nowe_id);
     });
     
-    $("#edytuj_protokul-"+nr_wiersza).click(przelacz_protokul);
-    $("#usun_protokul-"+nr_wiersza).click(klick_przelacz_protokul);
+    var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
+    var nowe_id = "switch_protocol-"+nr_wiersza;
+    nowy_przycisk.attr("id", nowe_id );
+    
+    nowy_przycisk.addClass("protocol"+nr_wiersza);
+    nowy_przycisk.find("span").text("Object nr "+ nr_wiersza );
+   
+    
+    var remove_b = nowy_przycisk.find(".remove_button");
+    remove_b.attr("id","remove_button-"+nr_wiersza);
+   
+    
+  
+    
+    nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
 
-    /*
-     $("#list_of_objects").find("tr").last().after(
-     '<tr  id="wiersz_nr' + nr_wiersza + '" class="protocol' + nr_wiersza + '"></tr>');
-     $("#list_of_objects")
-     .find("tr")
-     .last()
-     .load(
-     'data/lista_objektow_nowy_wiersz.html',
-     function() {
-     
-     $('#wiersz_nr' + nr_wiersza)
-     .find('.dynamic')
-     .each(
-     function() {
-     
-     console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
-     var stare_id = $(this).attr("id");
-     var nowe_id = stare_id + nr_wiersza;
-     //alert("stare id " +stare_id + "nowe_id "+nowe_id);
-     $(this).attr("id", nowe_id);
-     
-     });
-     
-     $('#lp' + nr_wiersza).html(nr_wiersza);
-     
-     $("#edytuj_protokol_button" + nr_wiersza).click(
-     edytuj_protokol);
-     
-     });*/
-
+   
+    
+    nowy_przycisk.click(klick_przelacz_protokul);
+    
+   
     zaladuj_protokol(nr_wiersza);
     zmiana_odnosnikow_spisu_tresci(nr_wiersza);
+    nowy_przycisk.click();
 
 }
 
 function klick_przelacz_protokul(){
     var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
-    remove_object(nr_protokolu);
+     $(this).addClass("switch_button_active");
+    przelacz_protokul(nr_protokolu);
 }
 
-function przelacz_protokul(){
-    var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
+
+function przelacz_protokul(nr_protokolu){
+   
     alert("nr protokolu = " + nr_protokolu);
     $(".protocol_table_part").each(function(){
         $(this).addClass("ukryty_protokol");

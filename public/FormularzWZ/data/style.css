@@ -1,215 +1,342 @@
 @CHARSET "UTF-8";
 
+
 #menu{
-	/*
-	border: thin;
-	border-style: solid;
-	border-color: blue; */
-	background-color: white; 
-	position: fixed;
-	right: 30px;
-	top: 30px;
-	height: 80%;
-	
-	
+    /*
+    border: thin;
+    border-style: solid;
+    border-color: blue; */
+    background-color: graytext; 
+    position: fixed;
+   
+    right: 0px;
+    top: 0px;
+    height: 40px;
+    width: 100%;
+
+
 }
 
-#menu_place{
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    height: 5mm;
-    background-color:  inactivecaption;
-}
+
 
 #menu_top{
-	
-	background-color: menu;
-	position: static;
-	text-align: right;
-	background-color: menu;
-	
+
+    background-color: menu;
+    position: static;
+    text-align: right;
+    background-color: menu;
+
 }
 
-
-#spis_tresci_more{
-	height: 100%;
-	overflow-y: scroll;
-	background-color: menu;
+#left{
+    display: inline;
+    float: left;
 }
 
 #kontener{
-	width: 21cm;
-	font-size: small;
+    display: inline;
+    float: left;
+    z-index: -1;
+}
+#right{
+    display: inline;
+    float: left;
+    z-index: 9999;
+}
+
+
+
+
+#protocol_switcher 
+{
+    /* text-decoration: none; */
+    display: inline;
+    text-align: left;
+    
+   
+    //z-index: -1;
+//background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); /* W3C */
+
+}
+
+
+.switch_button{
+    display: inline;
+    float: left;
+ padding: .2em 1em;
+    font-size: medium;
+    //width: ;
+    border: 1px;
+    text-align: left;
+   
+    border-style: solid;
+  //  border-right-style: none;
+    border-collapse: collapse;
+    margin-bottom: 0px;
+    margin-left:0px;
+    margin-right: 0px;
+   
+    border-top-left-radius: 8px;
+}
+.switch_button:hover{
+    background-color: #FF7E00;
+    
+}
+.switch_button_active{
+    font-size: xx-large;
+}
+#dodaj_object{
+    background-color: red;
+}
+#dodaj_object div{
+    display: none;
+    font-size: xx-large;
+}
+#dodaj_object:hover{
+    background-color: purple;
+}
+
+
+
+.remove_button{
+  display: inline;
+   
+  position: relative;
+  right: -15px;
+  top: -8px;
+    text-align: right;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: inherit;
+
+   /*
+    position: relative;
+    right: -15px;
+    top: -4px;
+    z-index: 5000;
+    margin: 0px;
+    background-color: inherit
+   */
+    
+}
+.remove_button:hover{
+   
+  //  font-size: large;
+  background-color: black;
+  color: white;
+    
+    
+}
+
+#objekt_nr-1 table{
+    margin-top: 1px;
+    padding-top: 0px;
+}
+
+ 
+
+
+#spis_tresci_top{
+    position: fixed;
+    right:10px;
+    top: 50%;
+   transform: rotate(90deg);
+   font-size: xx-large;
+   color: activeborder;
+   font-family:{}
+    z-index: 9998;
+}
+
+#spis_tresci_more{
+    height: 95%;
+    overflow-y: scroll;
+    position: fixed;
+    background-color: menu;
+    right: 10px;
+    display: none;
+    z-index: 9999;
+}
+
+#kontener{
+    width: 21cm;
+    font-size: small;
 }
 #miejsce_data{
-	border-color: white;
-	margin-left: 13cm;
-	width: 40%;
-	font-size:14px;
-	
-	text-align: right;
-	
+    border-color: white;
+    margin-left: 13cm;
+    width: 40%;
+    font-size:14px;
+
+    text-align: right;
+
 }
 #td_data{
-	border-color: white;
+    border-color: white;
 }
 
 #td_miejsce{
-	border-color: white;
+    border-color: white;
 }
 
 
 .ukryty_protokol{
-	display: none;
-	
+    display: none;
+
 }
 
 ol.menu{
-	list-style-type: none;
-	font-size: small;
+    list-style-type: none;
+    font-size: small;
 }
 
 a.menu{
-	color: black;
+    color: black;
 }
 
 ol{
-/* counter-increment: licznik_li; */
-	
+    /* counter-increment: licznik_li; */
+
 }
 ol:BEFORE{
-/*	content: counter(licznik_li, upper-roman); */
+    /*	content: counter(licznik_li, upper-roman); */
 }
 
 
 li.wybrany{
-	/* list-style-type: disc; */
-	font-weight: bold; 
-	list-style-type: decimal-leading-zero;
-	
+    /* list-style-type: disc; */
+    font-weight: bold; 
+    list-style-type: decimal-leading-zero;
+
 }
 
 li.dynamic{
-	font-weight: lighter; /*!important*/
+    font-weight: lighter; /*!important*/
 }
 
 li.header{
-	list-style: upper-roman;
-	font-weight: bold;
-	
+    list-style: upper-roman;
+    font-weight: bold;
+
 }
 li.ukryte{
-	display: none; 	
+    display: none; 	
 }
 li:HOVER{
-	/*font-weight: bold;*/ 
+    /*font-weight: bold;*/ 
 }
 
 body{
-	font-size: 9 px;
-	counter-reset: licznik_li;
+    font-size: 9 px;
+    height: 842px;
+        width: 595px;
+        /* to centre page on screen*/
+        margin-left: 10px;
+        margin-right: auto;
+        
 }
 
 h2{ 
     margin-top: 15 px;
     padding-top: 1em;
-	font-size: larger;
-	font-family: cursive;
+    font-size: larger;
+    font-family: cursive;
 
 }
 
 h3{
-	padding-top: 1em;
-	font-size: medium;
-	font-family: cursive;
-	
+    padding-top: 1em;
+    font-size: medium;
+    font-family: cursive;
+
 }
 
 h1{
-	margin-top: 15 px;
-	padding-top: 1em;
-	font-size: x-large;
+    margin-top: 15 px;
+    padding-top: 1em;
+    font-size: x-large;
 }
 
-div#kontener{
-	width: 20 cm;
-	
+#kontener{
+    width: 20cm;
+    //background-color: red;
+
 }
 table {
-	/* counter-reset: line-number; */
-		width: 100%;
-		caption-side: top;
-		text-align: left;
-		table-layout: auto;
-		margin-top: 20px;
+    /* counter-reset: line-number; */
+    width: 100%;
+    caption-side: top;
+    text-align: left;
+    table-layout: auto;
+    margin-top: 20px;
 }
 
 .table_caption{
-	
-	font-size: larger;
-	text-align: left;
-	font-style: normal;
-	font: bolder;
-	font-variant: normal;
-	color: black;
+
+    font-size: larger;
+    text-align: left;
+    font-style: normal;
+    font: bolder;
+    font-variant: normal;
+    color: black;
 }
 
 td {
-	border: 1px;
-	border-style: solid;
-	border-collapse: collapse;
-	text-align: left; 
-	vertical-align: top; 
-	font-size: 9 px;
-	/* padding: 5px; */
+    border: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+    text-align: left; 
+    vertical-align: top; 
+    font-size: 9 px;
+    /* padding: 5px; */
 }
 
 th {
-	border: 1px;
-	border-style: solid;
-	border-collapse: collapse;
-	text-align: left; 
-	vertical-align: top; 
-	font-size: medium;
-	font-style: italic;
-	font-weight: lighter;
-	/* padding: 5px; */
+    border: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+    text-align: left; 
+    vertical-align: top; 
+    font-size: medium;
+    font-style: italic;
+    font-weight: lighter;
+    /* padding: 5px; */
 }
 
 th.first{
-	background-color: black;
+    background-color: black;
 }
 
 th.komentarz{
-	width: 48%;
-	
+    width: 48%;
+
 }
 
 td:first-child:before {
-	/*
+    /*
 content: counter(line-number) ".";
 counter-increment: line-number;
 padding-right: 0.3em; 
-*/
+    */
 }
 
 table.dynamic{
-	
-}
-
- 
- tr.wybrany{
-	background-color: inactiveborder;
-	
 
 }
 
 
+tr.wybrany{
+    background-color: inactiveborder;
 
-  tr.ukryte{
-	/* visibility: collapse; */ 
-	
+
+}
+
+
+
+tr.ukryte{
+    /* visibility: collapse; */ 
+
 }
 
 
@@ -218,46 +345,46 @@ select{
 }
 
 td.podpisy{
-	border-color: silver;
-	border: none;
+    border-color: silver;
+    border: none;
 }
 
 
 tr.podpisy{
-	border-bottom-color: silver;
+    border-bottom-color: silver;
 }
 
 .protocol1{
-	background-color: Ghostwhite;
+    background-color: Ghostwhite;
 }
 
 .protocol2{
-	background-color: Powderblue;
+    background-color: Powderblue;
 }
 
 .protocol3{
-	background-color: Linen;
+    background-color: Linen;
 }
 .protocol4{
-	background-color: Mintcream;
+    background-color: Mintcream;
 }
 .protocol5{
-	background-color: Papayawhip;
+    background-color: Papayawhip;
 }
 .protocol6{
-	background-color: Aliceblue;
+    background-color: Aliceblue;
 }
 .protocol7{
-	background-color: Wheat;
+    background-color: Wheat;
 }
 .protocol8{
-	background-color: Lightpink;
+    background-color: Lightpink;
 }
 .protocol9{
-	background-color: Thistle;
+    background-color: Thistle;
 }
 .protocol10{
-	background-color: Lavender;
+    background-color: Lavender;
 }
 
 .wynik_rodzaj_objektu{
@@ -267,71 +394,71 @@ tr.podpisy{
 
 @MEDIA print  {
 
-button{
-	display: none;
-}
+    button{
+        display: none;
+    }
 
 
-.new_page{
-	page-break-before: always;
-}
-	
-.ukryty_protokol{
-	display: block;
-	background-color: white;
-	
-}
-	
-	  tr.ukryte{
-	visibility: collapse;
-	  }
-	  div#menu{
-	  visibility: hidden;
-	  }
-	  
-	  div#low_paragrafs{
-	  visibility: hidden;
-	  display: none;
-	  }
+    .new_page{
+        page-break-before: always;
+    }
+
+    .ukryty_protokol{
+        display: block;
+        background-color: white;
+
+    }
+
+    tr.ukryte{
+        visibility: collapse;
+    }
+    div#menu{
+        visibility: hidden;
+    }
+
+    div#low_paragrafs{
+        visibility: hidden;
+        display: none;
+    }
 
 
 }
 
 
 td.wybrany{
-	background-color: blue;
-	font-weight: bold; 
+    background-color: blue;
+    font-weight: bold; 
 }
 
 p{
-	/* background-color: red; */
-	margin-top: 0px; 
-	margin-bottom: 0px; 
-	/* line-spacing: single; */
-	
+    /* background-color: red; */
+    margin-top: 0px; 
+    margin-bottom: 0px; 
+    /* line-spacing: single; */
+
 }
 
 
 
 textarea {
-	width: 100%;
-	white-space: nowrap;
+    width: 100%;
+    white-space: nowrap;
 
-	
+
 }
 
 div.editable {
-	vertical-align: top;
-	height: 40%;
-	background-color: white;
-	
-	
-	position: static;
-	 text-align: justify;
-	/* width: 100%;
-    height: 100%; 
-   border: 1px solid #ccc;  
-    padding: 5px; */ 
+    vertical-align: top;
+    height: 40%;
+    background-color: white;
+
+
+    position: static;
+    text-align: justify;
+    /* width: 100%;
+height: 100%; 
+border: 1px solid #ccc;  
+padding: 5px; */ 
 }
 
 
