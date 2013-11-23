@@ -60,63 +60,90 @@ $(document).ready(function() {
 
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
     //alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
-    var tabela_objektu = $("#objekt_nr").clone();
-    tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
-    //alert("clon = " + tabela_objektu.attr("id"));
+    var nazwa_objektu;
+    $("#modal_nazwa_objektu").dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            Ok: function() {
 
-    var ostatni = $("#pojemnik_na_objekty").find(".object").last();
-    tabela_objektu.addClass("protocol" + nr_wiersza);
-    tabela_objektu.insertAfter(ostatni);
-    tabela_objektu.find(".dynamic").each(function() {
+                jQuery.validator.setDefaults({
+                    debug: true,
+                    success: "valid"
+                });
+                var form = $("#form_nazwa_objektu");
+                form.validate();
+               
+                    alert("Valid: " + form.valid());
+               
 
-        console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
-        var stare_id = $(this).attr("id");
-        var nowe_id = stare_id + "-" + nr_wiersza;
-        //alert("stare id " +stare_id + "nowe_id "+nowe_id);
-        $(this).attr("id", nowe_id);
+                
+
+                var tabela_objektu = $("#objekt_nr").clone();
+                tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
+                //alert("clon = " + tabela_objektu.attr("id"));
+
+                var ostatni = $("#pojemnik_na_objekty").find(".object").last();
+                tabela_objektu.addClass("protocol" + nr_wiersza);
+                tabela_objektu.insertAfter(ostatni);
+                tabela_objektu.find(".dynamic").each(function() {
+
+                    console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
+                    var stare_id = $(this).attr("id");
+                    var nowe_id = stare_id + "-" + nr_wiersza;
+                    //alert("stare id " +stare_id + "nowe_id "+nowe_id);
+                    $(this).attr("id", nowe_id);
+                });
+
+                var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
+                var nowe_id = "switch_protocol-" + nr_wiersza;
+                nowy_przycisk.attr("id", nowe_id);
+
+                nowy_przycisk.addClass("protocol" + nr_wiersza);
+                nowy_przycisk.find("span").text("Object nr " + nr_wiersza);
+
+
+                nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
+
+
+
+                var remove_b = nowy_przycisk.find(".remove_button");
+                remove_b.attr("id", "remove_button-" + nr_wiersza);
+                remove_b.click(klick_usun_objekt);
+
+                nowy_przycisk.click(klick_przelacz_protokul);
+
+
+
+                zaladuj_protokol(nr_wiersza);
+                zmiana_odnosnikow_spisu_tresci(nr_wiersza);
+                nowy_przycisk.click();
+
+                $(this).dialog("close");
+            }
+        }
     });
-    
-    var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
-    var nowe_id = "switch_protocol-"+nr_wiersza;
-    nowy_przycisk.attr("id", nowe_id );
-    
-    nowy_przycisk.addClass("protocol"+nr_wiersza);
-    nowy_przycisk.find("span").text("Object nr "+ nr_wiersza );
-   
-    
-    var remove_b = nowy_przycisk.find(".remove_button");
-    remove_b.attr("id","remove_button-"+nr_wiersza);
-   
-    
-  
-    
-    nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
 
-   
-    
-    nowy_przycisk.click(klick_przelacz_protokul);
-    
-   
-    zaladuj_protokol(nr_wiersza);
-    zmiana_odnosnikow_spisu_tresci(nr_wiersza);
-    nowy_przycisk.click();
 
 }
 
-function klick_przelacz_protokul(){
+function klick_przelacz_protokul() {
+    $("#protocol_switcher").find(".switch_button").each(function() {
+        $(this).removeClass("switch_button_active");
+    });
     var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
-     $(this).addClass("switch_button_active");
+    $(this).addClass("switch_button_active");
     przelacz_protokul(nr_protokolu);
 }
 
 
-function przelacz_protokul(nr_protokolu){
-   
-    alert("nr protokolu = " + nr_protokolu);
-    $(".protocol_table_part").each(function(){
+function przelacz_protokul(nr_protokolu) {
+
+    //alert("nr protokolu = " + nr_protokolu);
+    $(".protocol_table_part").each(function() {
         $(this).addClass("ukryty_protokol");
-        });
-     $("#tables_object"+nr_protokolu).removeClass("ukryty_protokol");
+    });
+    $("#tables_object" + nr_protokolu).removeClass("ukryty_protokol");
 }
 function zaladuj_protokol(nr_protokolu) {
 
@@ -355,7 +382,10 @@ function zmiana_rodzaju_obiektu() {
  */
 
 function klick_usun_objekt() {
-    var nrWiersza = parseInt($("#pojemnik_na_objekty").find(".object").last().attr("id").toString().split("-")[1]);
+    //alert($(this).attr("id"));
+    var nrWiersza = parseInt($(this).attr("id").toString().split("-")[1]);
+    //alert("usuwanie " + nrWiersza);
+    $(this).remove();
     remove_object(nrWiersza);
 }
 
@@ -364,10 +394,13 @@ function remove_object(nr_objektu) {
     // alert("dł " + $("#list_of_objects").find("tr").length );
     if (nr_objektu > 1) {
         // alert("dziala if");
-        $("#tables_object" + (nr_objektu - 1)).removeClass("ukryty_protokol");
+        // $("#tables_object" + (nr_objektu - 1)).removeClass("ukryty_protokol");
+        // $("#switch_protocol-1").click();
         var protocol_id = "tables_object" + nr_objektu;
         $("#" + protocol_id).html(" ");
         $("#objekt_nr-" + nr_objektu).remove();
+        $("#switch_protocol-" + nr_objektu).remove();
+        $("#switch_protocol-1").click();
 
     }
 

@@ -21,6 +21,8 @@
 
         <script type="text/javascript" charset="utf-8"  src="data/ckeditor/adapters/jquery.js"  ></script>
         <script type="text/javascript" charset="utf-8" src="data/pouchdb.js" ></script>
+        <script type="text/javascript" charset="utf-8" src="data/validator/jquery.validate.js" ></script>
+        <script type="text/javascript" charset="utf-8" src="data/validator/additional-methods.js" ></script>
         <!--
         <script>
         // This code is generally not necessary, but it is here to demonstrate
@@ -249,7 +251,7 @@
                       
                         <div id="dodaj_object" class="switch_button ">
                             <span>+</span>
-                           <div id="usun_object" class="remove_button " title="Usuń object">X</div>  
+                           <div id="usun_object" class="remove_button" title="Usuń object">X</div>  
                         </div>
                           
                         
@@ -688,9 +690,7 @@
                     <!--<button type="button" id="dodaj_object">
                         Dodaj
                     </button>-->
-                    <button type="button" id="usun_object1">
-                        Usuń ostatni
-                    </button>
+                    
                 </div>
 
                 <div id="objects_protocols">
@@ -1582,6 +1582,14 @@
                 </li>
             </ol>
 
+        </div>
+        
+        <div id="modal_nazwa_objektu" class="modal">
+            <form id="form_nazwa_objektu">
+                <p>Podaj nazwe objektu</p>
+                <input id="nazwa_objektu" type="text" required=""  />
+            </form>
+            
         </div>
 
     </body>
