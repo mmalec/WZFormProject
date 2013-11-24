@@ -247,23 +247,18 @@
                     <div style="margin-top: 0px; background-color: green">dklsadslkadslka</div>
 
 
-                    <div id="protocol_switcher"  >
-                      
-                        <div id="dodaj_object" class="switch_button ">
-                            <span>+</span>
-                           <div id="usun_object" class="remove_button" title="Usuń object">X</div>  
-                        </div>
-                          
-                        
-
-
-
-
-
-                    </div>
 
 
                 </div>
+                <div id="protocol_switcher"  >
+
+                    <div id="dodaj_object" class="switch_button ">
+                        <span>+</span>
+                        <div id="usun_object" class="remove_button" title="Usuń object">X</div>  
+                    </div>
+
+                </div>
+
                 <div class="tois Treścip_menu_class" id="spis_tresci_top">
                     Nawigacja
 
@@ -676,22 +671,19 @@
                 </table>
 
 
+
                 <div id="pojemnik_na_objekty"> 
                     <br>
                     <p class="table_caption object" >Wykaz kontrolowanych obiektów, terenów i urządzeń; (z podziałem na
                         ZL, PM, IN)</p>
-
-
-
-
-
-
-
-                    <!--<button type="button" id="dodaj_object">
-                        Dodaj
-                    </button>-->
                     
-                </div>
+                    <ol id="lista_objektow">
+                        <li id="li_object_nr-1" class="object"><div class="li_nazwa_objectu">Bez nazwy 1</div></li>
+                        
+                    </ol>
+
+
+                </div>                
 
                 <div id="objects_protocols">
 
@@ -1583,13 +1575,13 @@
             </ol>
 
         </div>
-        
+
         <div id="modal_nazwa_objektu" class="modal">
             <form id="form_nazwa_objektu">
                 <p>Podaj nazwe objektu</p>
                 <input id="nazwa_objektu" type="text" required=""  />
             </form>
-            
+
         </div>
 
     </body>

@@ -1,16 +1,13 @@
 //to jest zmiana II nn
 $(document).ready(function() {
-    // alert("dziala dfsdsdsdsd");
+// alert("dziala dfsdsdsdsd");
     $("#komentarz").text("dziala Jq");
-
     $("#wersja_przegladarki").html(parseInt($.browser.version));
-
     if (($.browser.msie) && (parseInt($.browser.version) >= 10)) {
 
 
         $("#komunikat").hide();
         $("#formularz").show();
-
         //alert( parseInt( $.browser.version ));
     }
     else if (($.browser.mozilla) && (parseInt($.browser.version) >= 23)) {
@@ -23,20 +20,15 @@ $(document).ready(function() {
     }
 
     $("#data_protokolu").datepicker($.datepicker.regional["pl"]);
-
     dodaj_wiesz_listy_objektow(1);
-
     $("#dodaj_object").click(add_new_object);
     $("#usun_object").click(klick_usun_objekt);
     $(".edytuj_protokol_button").click(edytuj_protokol);
-
     // $(".editable").ckedit();
 
 
     $("#komentarz").text("działa aaaaaaaaaaaaaaaaa");
-
     $(".tableheader").removeClass("ukryte");
-
     // $("table.dynamic").mouseenter(pokarz_wszystkie_wiersze_w_tabeli);
     // $("table.dynamic").mouseleave(ukryj_niewybrane_wiersze_w_tabeli);
     $("#pouchdb").click(dbTest);
@@ -45,22 +37,18 @@ $(document).ready(function() {
 
     // spis tre�ci
     $("#spis_tresci_top").mouseenter(function() {
-        // alert("mouse entr");
+// alert("mouse entr");
         $("#spis_tresci_more").show("slow");
     });
-
     $("#spis_tresci_more").mouseleave(function() {
-        // alert("mouse leave");
+// alert("mouse leave");
         $("#spis_tresci_more").hide("slow");
     });
-
     $("div.editable").click(make_div_editable);
-
 });
-
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
     //alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
-    var nazwa_objektu;
+    /* var nazwa_objektu;
     $("#modal_nazwa_objektu").dialog({
         modal: true,
         autoOpen: true,
@@ -73,12 +61,14 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
                 });
                 var form = $("#form_nazwa_objektu");
                 form.validate();
-               
-                    alert("Valid: " + form.valid());
-               
 
-                
-
+                alert("Valid: " + form.valid());
+                $(this).dialog("close");
+            }
+        }
+    }); */
+    
+    
                 var tabela_objektu = $("#objekt_nr").clone();
                 tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
                 //alert("clon = " + tabela_objektu.attr("id"));
@@ -94,37 +84,20 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
                     //alert("stare id " +stare_id + "nowe_id "+nowe_id);
                     $(this).attr("id", nowe_id);
                 });
-
                 var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
                 var nowe_id = "switch_protocol-" + nr_wiersza;
                 nowy_przycisk.attr("id", nowe_id);
-
                 nowy_przycisk.addClass("protocol" + nr_wiersza);
-                nowy_przycisk.find("span").text("Object nr " + nr_wiersza);
-
-
+                
+                nowy_przycisk.find("span").text("Bez nazwy " + nr_wiersza);
                 nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
-
-
-
                 var remove_b = nowy_przycisk.find(".remove_button");
                 remove_b.attr("id", "remove_button-" + nr_wiersza);
                 remove_b.click(klick_usun_objekt);
-
                 nowy_przycisk.click(klick_przelacz_protokul);
-
-
-
                 zaladuj_protokol(nr_wiersza);
                 zmiana_odnosnikow_spisu_tresci(nr_wiersza);
                 nowy_przycisk.click();
-
-                $(this).dialog("close");
-            }
-        }
-    });
-
-
 }
 
 function klick_przelacz_protokul() {
@@ -139,10 +112,22 @@ function klick_przelacz_protokul() {
 
 function przelacz_protokul(nr_protokolu) {
 
-    //alert("nr protokolu = " + nr_protokolu);
+//alert("nr protokolu = " + nr_protokolu);
     $(".protocol_table_part").each(function() {
         $(this).addClass("ukryty_protokol");
     });
+    
+    $("#pojemnik_na_objekty").find("div.object").each(function(){
+       $(this).addClass("ukryte");
+       $("#objekt_nr-"+nr_protokolu).removeClass("ukryte");
+    });
+    
+    $("body").attr("class", function(){
+    return this.toString().replace(/protocol\d+/,"");
+    
+    });
+    
+    $("body").addClass("protocol"+nr_protokolu);
     $("#tables_object" + nr_protokolu).removeClass("ukryty_protokol");
 }
 function zaladuj_protokol(nr_protokolu) {
@@ -153,15 +138,10 @@ function zaladuj_protokol(nr_protokolu) {
                 console.log("ładuje protokow nr=" + nr_protokolu);
                 pokarz_wybrane_wiersze_w_tabeli();
                 $("div.editable").click(make_div_editable);
-
                 $("input[type=checkbox]").change(
                         pokarz_wybrane_wiersze_w_tabeli);
                 console.log("koncze ladowanie protokolu nr=" + nr_protokolu);
-
-
-
                 console.log("zaczynam nienia� nazwy id");
-
                 $("#tables_object" + nr_protokolu).find("select").each(
                         function() {
                             console.log("zaczynam zmieniac nazwy dla id");
@@ -170,7 +150,6 @@ function zaladuj_protokol(nr_protokolu) {
                             console.log("stare id " + stare_id + " nowe_id" + nowe_id);
                             $(this).attr("id", nowe_id);
                         });
-
                 $("#tables_object" + nr_protokolu).find(".dynamic").each(
                         function() {
                             console.log("zaczynam zmieniac nazwy dla id dla class dymanic");
@@ -179,7 +158,6 @@ function zaladuj_protokol(nr_protokolu) {
                             console.log("stare id " + stare_id + " nowe_id" + nowe_id);
                             $(this).attr("id", nowe_id);
                         });
-
                 $("#tables_object" + nr_protokolu).find("div").each(function() {
                     // console.log("zaczynam zmieniac nazwy dla id");
                     var stare_id = $(this).attr("id");
@@ -187,7 +165,6 @@ function zaladuj_protokol(nr_protokolu) {
                     // alert("stare id " +stare_id + " nowe_id "+nowe_id);
                     $(this).attr("id", nowe_id);
                 });
-
                 $("#tables_object" + nr_protokolu).find("td").each(function() {
                     // console.log("zaczynam zmieniac nazwy dla id");
                     var stare_id = $(this).attr("id");
@@ -195,25 +172,18 @@ function zaladuj_protokol(nr_protokolu) {
                     // alert("stare id " +stare_id + " nowe_id "+nowe_id);
                     $(this).attr("id", nowe_id);
                 });
-
                 $("#tables_object" + nr_protokolu).find("input").each(
                         function() {
                             var stare_id = $(this).attr("id");
                             var nowe_id = stare_id + "-" + nr_protokolu;
                             $(this).attr("id", nowe_id);
                         });
-
                 $("#data_kontroli-" + nr_protokolu).datepicker(
                         $.datepicker.regional["pl"]);
-
                 $("#data_wykonania_decyzji-" + nr_protokolu).datepicker(
                         $.datepicker.regional["pl"]);
-
                 $("#tables_object-" + nr_protokolu).find("input[type=checkbox]")
                         .change(pokarz_wybrane_wiersze_w_tabeli);
-
-
-
                 // $("#grupa_objektow").attr("id" ,"grupa_objektow"+nr_protokolu
                 // );
 
@@ -226,22 +196,14 @@ function zaladuj_protokol(nr_protokolu) {
                 //         nr_protokolu);
                 $('#wysokosc_budkunku-' + nr_protokolu).change(
                         oblicz_watrosci_wymagane);
-
-
-
                 //  $("#liczba_kondyg_nadziemnych_instniejaca-" + nr_protokolu).attr("nr_protokolu",
                 //         nr_protokolu);
                 $('#liczba_kondyg_nadziemnych_instniejaca-' + nr_protokolu).change(
                         oblicz_watrosci_wymagane);
-
-
                 //   $("#gestosc_obciazenia_ogniowego_istniejaca-" + nr_protokolu).attr("nr_protokolu",
                 //          nr_protokolu);
                 $('#gestosc_obciazenia_ogniowego_istniejaca-' + nr_protokolu).change(
                         oblicz_watrosci_wymagane);
-
-
-
                 // $("#kategoria_objektuII").attr("id"
                 // ,"kategoria_objektuII"+nr_protokolu );
                 //   $("#kategoria_objektuII-" + nr_protokolu).attr("nr_protokolu",
@@ -251,7 +213,6 @@ function zaladuj_protokol(nr_protokolu) {
                 $("#objects_protocols > div").addClass("ukryty_protokol");
                 $("#tables_object" + nr_protokolu).removeClass(
                         "ukryty_protokol");
-
                 $("#nazwa_obiektu-" + nr_protokolu).change(
                         function() {
                             var text = $(this).val();
@@ -261,12 +222,9 @@ function zaladuj_protokol(nr_protokolu) {
                                     .text(text);
                             $("#charakterystyka_nr_obiektu-" + nr_protokolu)
                                     .text(nr);
-
                             // console.log("wpisalem nazwe ob " + nr_protokolu);
                         });
-
                 dodanie_wiersza_rodzaju_objektu(nr_protokolu, 1);
-
                 $("#dodaj_wiersz_rodzaju_objektu-" + nr_protokolu).click(klick_dodanie_wiersza_rodzaju_objektu);
                 //uswienie pierwszego wiersza w protokole
                 //teraz selecty w rodzaju obiektu
@@ -277,25 +235,23 @@ function zaladuj_protokol(nr_protokolu) {
 
 
             });
-
 }
 
 
 function klick_dodanie_wiersza_rodzaju_objektu() {
-    //numer protokolu z id guzika
+//numer protokolu z id guzika
     var nr_protokolu = parseInt($(this).attr("id").toString().split("").pop());
     //alert("nr protokolu = " + nr_protokolu);
     var nr_wiersza = parseInt($("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id").toString().split("").pop());
     dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza + 1);
-
 }
 
 function powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza) {
-    //alert("Wizanie selekow " + nr_protokolu + " nr wiersza " + nr_wiersza);
+//alert("Wizanie selekow " + nr_protokolu + " nr wiersza " + nr_wiersza);
 
-    //$("#rodzaj_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
-    // $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
-    //$("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
+//$("#rodzaj_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
+// $("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
+//$("#kategoria_objektu-" + nr_protokolu+"-"+nr_wiersza).unbind("change");
 
     $("#rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza).chained(
             "#grupa_objektow-" + nr_protokolu + "-" + nr_wiersza);
@@ -331,7 +287,6 @@ function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
     $("#dane_dot_kontroli-" + nr_protokolu).find("tr").last().attr("id", "wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza);
     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("div").last().attr("id", "opis_wiersza_rodzaju_budynku_budynku-" + nr_protokolu + "-" + nr_wiersza);
     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("div").last().click(make_div_editable);
-
     //teraz selecty
     $("#wiersz_wyboru_rodzaju_objektu-" + nr_protokolu + "-" + nr_wiersza).find("select").each(
             function() {
@@ -341,8 +296,6 @@ function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
                 console.log("stare id " + stare_id + " nowe_id" + nowe_id);
                 $(this).attr("id", nowe_id);
             });
-
-
     powiaz_selecty_w_wierszu_rodzaju_budynku(nr_protokolu, nr_wiersza);
     if (nr_wiersza === 1) {
         $("#rodzaj_objectu-" + nr_protokolu).html("<div id=\"wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza + "\" class=\"wynik_rodzaj_objektu\" >--</div>");
@@ -353,8 +306,8 @@ function dodanie_wiersza_rodzaju_objektu(nr_protokolu, nr_wiersza) {
     }
 
     $("#kategoria_objektu-" + nr_protokolu + "-" + nr_wiersza).change(function() {
-        // alert("dziala");
-        // var klasa_op = $(this  "option:selected").text;
+// alert("dziala");
+// var klasa_op = $(this  "option:selected").text;
 
         $("#wynik_rodzaj_objektu-" + nr_protokolu + "-" + nr_wiersza).html(this.value);
     });
@@ -382,7 +335,7 @@ function zmiana_rodzaju_obiektu() {
  */
 
 function klick_usun_objekt() {
-    //alert($(this).attr("id"));
+//alert($(this).attr("id"));
     var nrWiersza = parseInt($(this).attr("id").toString().split("-")[1]);
     //alert("usuwanie " + nrWiersza);
     $(this).remove();
@@ -391,17 +344,16 @@ function klick_usun_objekt() {
 
 function remove_object(nr_objektu) {
 
-    // alert("dł " + $("#list_of_objects").find("tr").length );
+// alert("dł " + $("#list_of_objects").find("tr").length );
     if (nr_objektu > 1) {
-        // alert("dziala if");
-        // $("#tables_object" + (nr_objektu - 1)).removeClass("ukryty_protokol");
-        // $("#switch_protocol-1").click();
+// alert("dziala if");
+// $("#tables_object" + (nr_objektu - 1)).removeClass("ukryty_protokol");
+// $("#switch_protocol-1").click();
         var protocol_id = "tables_object" + nr_objektu;
         $("#" + protocol_id).html(" ");
         $("#objekt_nr-" + nr_objektu).remove();
         $("#switch_protocol-" + nr_objektu).remove();
         $("#switch_protocol-1").click();
-
     }
 
 }
@@ -410,15 +362,22 @@ function remove_object(nr_objektu) {
 // oraz ładuje protokol (tabeli z pliku do div -ów)
 // dodawany jest zawsze ostatni wiersz
 function add_new_object() {
-    // alert("dziala");
+// alert("dziala");
 
     var nrWiersza = parseInt($("#pojemnik_na_objekty").find(".object").last().attr("id").toString().split("-")[1]);
     if (nrWiersza === 10) {
-        return;
+          return;
     }
+    
+    var nowyNrWiersza=nrWiersza+1;
+    var nowy_wiersz_wykazu = $("#lista_objektow").find("li").first().clone();
+    nowe_id = nowy_wiersz_wykazu.attr("id").toString().split("-")[0]+"-"+nowyNrWiersza;
+    nowy_wiersz_wykazu.attr("id",nowe_id);
+    nowy_wiersz_wykazu.find(".li_nazwa_objectu").html("Bez nazwy "+nowyNrWiersza);
+    nowy_wiersz_wykazu.insertAfter($("#lista_objektow").find("li").last());
+    
 
-    dodaj_wiesz_listy_objektow(nrWiersza + 1);
-
+    dodaj_wiesz_listy_objektow(nowyNrWiersza);
     // zaladuj_protokol(nrWiersza + 1);
 
     /*
@@ -450,7 +409,6 @@ function make_div_editable() {
     console.log("Dziala make_div_editable");
     $(this).attr('contenteditable', true);
     $(this).ckeditor();
-
 }
 
 // mouseOver
@@ -487,7 +445,6 @@ function pokarz_wybrane_wiersze_w_tabeli() {
     $("table.dynamic ").find("input:checked").parent("td").parent("tr")
             .removeClass("ukryte");
     $(".tableheader").removeClass("ukryte");
-
 }
 /*
  * function przelacz_li(){ alert("Dziala li"); this.text("co jest grane");
@@ -499,18 +456,15 @@ function setUpEditor() {
 }
 
 function edytuj_protokol() {
-    // alert("edytuje");
+// alert("edytuje");
     var nrWiersza = $(this).parent("td").parent("tr").last().find("td").first()
             .html();
     console.log("nrWiersza=" + nrWiersza);
     var nrWierszaInt = parseInt(nrWiersza);
-
     var protocol_id = "tables_object" + nrWierszaInt;
     console.log("protocol_id=" + protocol_id);
     $(".protocol_table_part").addClass("ukryty_protokol");
     $("#" + protocol_id).removeClass("ukryty_protokol");
-
-
     zmiana_odnosnikow_spisu_tresci(nrWiersza);
     // zmiana odnośników
 
@@ -523,39 +477,29 @@ function zmiana_odnosnikow_spisu_tresci(nrWiersza) {
         var cel2 = cel.match(/.\w*/);
         //alert("cel2 " + cel2);
         console.log("cel = " + cel2);
-
         nowy_cel = cel2 + "-" + nrWiersza;
-
         $(this).attr("href", nowy_cel);
     });
-
 }
 function oblicz_watrosci_wymagane() {
 
     var nr_protokolu = $(this).attr("id").toString().split("-")[1].toString();
     console.log("dziala obliczanie wart wymaganych dla protokolu nr = " + nr_protokolu);
-
     czysc_wymagane(nr_protokolu);
-
     $("#kontrola").click();
-
     var kategoria_objektu = $('#kategoria_objektu-' + nr_protokolu).find(
             "option:selected").val();
     var wysokosc_budynku = $("#wysokosc_budkunku-" + nr_protokolu).find(
             'option:selected').val();
-
     var liczba_kondygnacji_naziemnych = $("#liczba_kondyg_nadziemnych_instniejaca-" + nr_protokolu).val();
-
     console.log("kategoria budynku = " + kategoria_objektu);
     console.log('wysokosc_budkunku =' + wysokosc_budynku);
     console.log('liczba_kondyg_nadziemnych_instniejaca = ' + liczba_kondygnacji_naziemnych);
-
     if ((kategoria_objektu == "PM") || (kategoria_objektu == "PM")) {
-        // obliczenia dla PM i IN
+// obliczenia dla PM i IN
         console.log("Obliczenia dla PM");
         var gestosc_obciazenia_ogniowego = get_gObciazenia_Ogniowego(nr_protokolu);
         console.log("G�sto�� OO = " + gestosc_obciazenia_ogniowego);
-
         if (liczba_kondygnacji_naziemnych == 1) {
             console.log("ustawiam wysokosc_budynku na J");
             wysokosc_budynku = "J";
@@ -564,10 +508,8 @@ function oblicz_watrosci_wymagane() {
         console.log("wysokosc_budynku " + wysokosc_budynku);
         var klasa_odpornosci_pozarowej = klasa_op_dla_PM[gestosc_obciazenia_ogniowego][wysokosc_budynku];
         console.log("Klasa odpor. pozar = " + klasa_odpornosci_pozarowej);
-
         $('#klasa_odpor_wymagana-' + nr_protokolu).text(
                 klasa_odpornosci_pozarowej);
-
         $('#konstrukcja_nos_wymagana-' + nr_protokolu).text(
                 wymogi_elementow[klasa_odpornosci_pozarowej]["KN"]);
         $('#konstrukcja_dachu_wymagana-' + nr_protokolu).text(
@@ -580,14 +522,12 @@ function oblicz_watrosci_wymagane() {
                 wymogi_elementow[klasa_odpornosci_pozarowej]["SW"]);
         $('#pokrycie_dachu_wymagana-' + nr_protokolu).text(
                 wymogi_elementow[klasa_odpornosci_pozarowej]["PD"]);
-
         //koniec oblicze� dla PM
 
 
     } else if ((kategoria_objektu.length > 0) && (wysokosc_budynku.length > 0)) {
-        // obliczenia dla ZL bez obnizania kategorii
+// obliczenia dla ZL bez obnizania kategorii
         console.log("Obliczenia ZL");
-
         if (liczba_kondygnacji_naziemnych == 1) {
             console.log("ustawiam wysokosc_budynku na J");
             wysokosc_budynku = "J";
@@ -596,11 +536,8 @@ function oblicz_watrosci_wymagane() {
         console.log("wysokosc_budynku " + wysokosc_budynku);
         var klasa_odpornosci_pozarowej = klasa_op_dla_ZL[wysokosc_budynku][kategoria_objektu];
         console.log("Klasa odpor. pozar = " + klasa_odpornosci_pozarowej);
-
-
         $('#klasa_odpor_wymagana-' + nr_protokolu).text(
                 klasa_odpornosci_pozarowej);
-
         $('#konstrukcja_nos_wymagana-' + nr_protokolu).text(
                 wymogi_elementow[klasa_odpornosci_pozarowej]["KN"]);
         $('#konstrukcja_dachu_wymagana-' + nr_protokolu).text(
@@ -613,9 +550,8 @@ function oblicz_watrosci_wymagane() {
                 wymogi_elementow[klasa_odpornosci_pozarowej]["SW"]);
         $('#pokrycie_dachu_wymagana-' + nr_protokolu).text(
                 wymogi_elementow[klasa_odpornosci_pozarowej]["PD"]);
-
     } else {
-        // jesli brakuje danych
+// jesli brakuje danych
         $('#klasa_odpor_wymagana-' + nr_protokolu).text("__ ");
     }
 
@@ -625,14 +561,12 @@ function oblicz_watrosci_wymagane() {
 function czysc_wymagane(nr_protokolu) {
 
     $('#klasa_odpor_wymagana-' + nr_protokolu).text("--");
-
     $('#konstrukcja_nos_wymagana-' + nr_protokolu).text("--");
     $('#konstrukcja_dachu_wymagana-' + nr_protokolu).text("--");
     $('#strop_wymagana-' + nr_protokolu).text("--");
     $('#sciana_zewnetrzna_wymagana-' + nr_protokolu).text("--");
     $('#sciana_wewnetrzna_wymagana-' + nr_protokolu).text("--");
     $('#pokrycie_dachu_wymagana-' + nr_protokolu).text("--");
-
 }
 
 function get_gObciazenia_Ogniowego(nr_protokolu) {
@@ -663,13 +597,11 @@ function get_gObciazenia_Ogniowego(nr_protokolu) {
 function dbTest() {
     $("#komentarz").text("dziala dbTest");
     console.log("dziala log");
-
     Pouch("'idb://baza", function(err, pouchdb) {
         if (err) {
             alert("Can't open pouchdb database");
         } else {
             db = pouchdb;
-
             var content = $("#kontener").html();
             var todo = {
                 _id: new Date().toISOString(),
@@ -691,7 +623,6 @@ function dbTest() {
                 .text("Pocla zaznaczen " + $("input[type=checkbox]").length);
         var str = "wynik1" + $("form").serialize();
         var field = $("form").serializeArray();
-
         jQuery.each(field, function(i, field) {
             $("#wynik").append(field.value + " ");
             console.log(a);
