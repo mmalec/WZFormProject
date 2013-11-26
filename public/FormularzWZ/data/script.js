@@ -213,17 +213,7 @@ function zaladuj_protokol(nr_protokolu) {
                 $("#objects_protocols > div").addClass("ukryty_protokol");
                 $("#tables_object" + nr_protokolu).removeClass(
                         "ukryty_protokol");
-                $("#nazwa_obiektu-" + nr_protokolu).change(
-                        function() {
-                            var text = $(this).val();
-                            var nr = $(this).parent("td").parent("tr").find(
-                                    "td").first().html();
-                            $("#charakterystyka_nazwa_obiektu-" + nr_protokolu)
-                                    .text(text);
-                            $("#charakterystyka_nr_obiektu-" + nr_protokolu)
-                                    .text(nr);
-                            // console.log("wpisalem nazwe ob " + nr_protokolu);
-                        });
+                $("#nazwa_obiektu-" + nr_protokolu).change(zmiana_nazwy_objektu);
                 dodanie_wiersza_rodzaju_objektu(nr_protokolu, 1);
                 $("#dodaj_wiersz_rodzaju_objektu-" + nr_protokolu).click(klick_dodanie_wiersza_rodzaju_objektu);
                 //uswienie pierwszego wiersza w protokole
@@ -235,6 +225,30 @@ function zaladuj_protokol(nr_protokolu) {
 
 
             });
+}
+
+
+ function zmiana_nazwy_objektu() {
+     //alert("zmiana nazwy");
+                            var text = $(this).val();
+                            //alert("text = " + text);
+                            var nr_protokolu=pobierz_nr_protokolu(this);
+                            
+                            var nr = $(this).parent("td").parent("tr").find(
+                                    "td").first().html();
+                            $("#charakterystyka_nazwa_obiektu-" + nr_protokolu)
+                                    .text(text);
+                            $("#charakterystyka_nr_obiektu-" + nr_protokolu)
+                                    .text(nr_protokolu);
+                            $("#switch_protocol-"+nr_protokolu).find("span").text(text);
+                            
+                            $("#li_object_nr-"+nr_protokolu).find(".li_nazwa_objectu").text(text);
+                            // console.log("wpisalem nazwe ob " + nr_protokolu);
+                        }
+                        
+function pobierz_nr_protokolu(el){
+    var nr_protokolu = parseInt($(el).attr("id").toString().split("-")[1].toString());
+    return nr_protokolu;
 }
 
 
@@ -353,6 +367,7 @@ function remove_object(nr_objektu) {
         $("#" + protocol_id).html(" ");
         $("#objekt_nr-" + nr_objektu).remove();
         $("#switch_protocol-" + nr_objektu).remove();
+        $("#li_object_nr-"+nr_objektu).remove();
         $("#switch_protocol-1").click();
     }
 
@@ -371,7 +386,7 @@ function add_new_object() {
     
     var nowyNrWiersza=nrWiersza+1;
     var nowy_wiersz_wykazu = $("#lista_objektow").find("li").first().clone();
-    nowe_id = nowy_wiersz_wykazu.attr("id").toString().split("-")[0]+"-"+nowyNrWiersza;
+    var nowe_id = nowy_wiersz_wykazu.attr("id").toString().split("-")[0]+"-"+nowyNrWiersza;
     nowy_wiersz_wykazu.attr("id",nowe_id);
     nowy_wiersz_wykazu.find(".li_nazwa_objectu").html("Bez nazwy "+nowyNrWiersza);
     nowy_wiersz_wykazu.insertAfter($("#lista_objektow").find("li").last());

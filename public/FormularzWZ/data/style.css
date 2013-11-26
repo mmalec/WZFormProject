@@ -84,6 +84,7 @@ display: inline-block;
    
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    z-index: 99999;
 }
 .switch_button:hover{
     background-color: #FF7E00;
@@ -236,6 +237,20 @@ ol:BEFORE{
     /*	content: counter(licznik_li, upper-roman); */
 }
 
+
+ol#lista_objektow{
+    
+   
+   
+    
+    
+}
+ol#lista_objektow li {
+  
+    font-size: medium;
+    list-style: decimal;
+    font: bold;
+}
 
 li.wybrany{
     /* list-style-type: disc; */
