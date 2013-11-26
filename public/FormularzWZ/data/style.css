@@ -11,8 +11,9 @@
    
     right: 0px;
     top: 0px;
-    height: 60px;
+    height: 30px;
     width: 100%;
+    z-index: 999;
 
 
 }
@@ -31,17 +32,28 @@
 #left{
     display: inline;
     float: left;
+    width: 1%;
+    height: 200px;
+    background-color: yellow;
 }
-
 #kontener{
     display: inline;
     float: left;
-    z-index: -1;
+    width: 21cm;
+    font-size: small;
 }
+
+
 #right{
     display: inline;
+    position: fixed;
+    top: 40px;
+    margin: 35px;
     float: left;
+    width: 20%;
+    height: 200px;
     z-index: 9999;
+    background-color: green;
 }
 
 
@@ -57,7 +69,7 @@ display: inline-block;
     margin-bottom: 0px;
    /* background-color: blue; */
     width: 100%;
-    height: 50px;
+    height: 30px;
    
     
 /* background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%,rgba(0,0,0,0) 100%); W3C */
@@ -94,7 +106,7 @@ display: inline-block;
 }
 .switch_button_active {
     
-    //position: static;
+    position: static;
     font-size: xx-large;
     margin-top: 0px;
     height: 33px;
@@ -173,14 +185,16 @@ div.object.ukryte{
 
 
 #spis_tresci_top{
+    
     position: fixed;
     right:10px;
     top: 50%;
    transform: rotate(90deg);
    font-size: xx-large;
    color: activeborder;
-   font-family:{}
+
     z-index: 9998;
+    
 }
 
 #spis_tresci_more{
@@ -193,10 +207,7 @@ div.object.ukryte{
     z-index: 9999;
 }
 
-#kontener{
-    width: 21cm;
-    font-size: small;
-}
+
 #miejsce_data{
     border-color: white;
     margin-left: 13cm;
@@ -277,8 +288,8 @@ li:HOVER{
 
 body{
     font-size: 9 px;
-    height: 842px;
-        width: 595px;
+   /* height: 842px;
+     //   width: 595px; */
         /* to centre page on screen*/
         margin-left: 10px;
         margin-right: auto;
