@@ -47,16 +47,22 @@
 #right{
     display: inline;
     position: fixed;
+     overflow-y: scroll;
     top: 40px;
     margin: 35px;
     float: left;
     width: 20%;
-    height: 200px;
-    z-index: 9999;
-    background-color: green;
+    height: 80%;
+    z-index: 99;
+    
+    
+   
+    
 }
 
-
+.valid_error{
+    color: red;
+}
 
 
 #protocol_switcher 
@@ -191,7 +197,7 @@ div.object.ukryte{
     top: 50%;
    transform: rotate(90deg);
    font-size: xx-large;
-   color: activeborder;
+   color: red;
 
     z-index: 9998;
     
@@ -321,6 +327,11 @@ h1{
     width: 20cm;
     //background-color: red;
 
+}
+
+
+#lista_bledow{
+    
 }
 table {
     /* counter-reset: line-number; */

@@ -45,59 +45,110 @@ $(document).ready(function() {
         $("#spis_tresci_more").hide("slow");
     });
     $("div.editable").click(make_div_editable);
+    $("#kontrola").click(validate_forms);
 });
-function dodaj_wiesz_listy_objektow(nr_wiersza) {
-    //alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
-    /* var nazwa_objektu;
-    $("#modal_nazwa_objektu").dialog({
-        modal: true,
-        autoOpen: true,
-        buttons: {
-            Ok: function() {
 
-                jQuery.validator.setDefaults({
-                    debug: true,
-                    success: "valid"
+
+function validate_forms() {
+    alert("Dziala validacja");
+    var token = true;
+    $("#formularz").validate({
+        invalidHandler: function(e, validator) {
+            alert("invalidHandler");
+//validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
+// for (var i = 0; i < validator.errorList.length; i++) {
+//    console.log(validator.errorList[i]);
+//   for (var i in vaildator.errorMap) {
+//  console.log(i, ":", validator.errorMap[i]);
+//   }
+        },
+        showErrors: function(errorMap, errorList) {
+            if (token) {
+                alert("showErrors:");
+                var i = 0;
+                var labelText = new Array(this.numberOfInvalids());
+                var lista_bledow = $("#lista_bledow");
+                lista_bledow.html("<p class=\"valid_error\"></p>");
+
+
+                $.each(errorMap, function(id, value) {
+//I had to change the following line to get the for attribute of the 
+//label that matches the id of the name
+                    var label = $("label[for='" + $('#' + name).attr('id') + "']").text();
+                    // labelText[i] = label;
+                    // alert("name =" + id);
+                    //  alert("value =" + value);
+                    var ostatni_listy_bledow = $("#lista_bledow").find("p").last();
+                    var nowy_wiersz = ostatni_listy_bledow.clone();
+                    nowy_wiersz.text(id);
+                    nowy_wiersz.insertAfter(ostatni_listy_bledow);
+                    i++;
                 });
-                var form = $("#form_nazwa_objektu");
-                form.validate();
 
-                alert("Valid: " + form.valid());
-                $(this).dialog("close");
             }
+            token = true;
+
+           // alert("token " + token);
         }
-    }); */
-    
-    
-                var tabela_objektu = $("#objekt_nr").clone();
-                tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
-                //alert("clon = " + tabela_objektu.attr("id"));
+    });
+   // $("#kontrola").focus();
+    //validator.errorMap is an object mapping input names -> error messages
+    //for (var i in vaildator.errorMap) {
+    //  console.log(i, ":", validator.errorMap[i]);
+    //}
 
-                var ostatni = $("#pojemnik_na_objekty").find(".object").last();
-                tabela_objektu.addClass("protocol" + nr_wiersza);
-                tabela_objektu.insertAfter(ostatni);
-                tabela_objektu.find(".dynamic").each(function() {
+}
+function dodaj_wiesz_listy_objektow(nr_wiersza) {
+//alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
+    /* var nazwa_objektu;
+     $("#modal_nazwa_objektu").dialog({
+     modal: true,
+     autoOpen: true,
+     buttons: {
+     Ok: function() {
+     
+     jQuery.validator.setDefaults({
+     debug: true,
+     success: "valid"
+     });
+     var form = $("#form_nazwa_objektu");
+     form.validate();
+     
+     alert("Valid: " + form.valid());
+     $(this).dialog("close");
+     }
+     }
+     }); */
 
-                    console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
-                    var stare_id = $(this).attr("id");
-                    var nowe_id = stare_id + "-" + nr_wiersza;
-                    //alert("stare id " +stare_id + "nowe_id "+nowe_id);
-                    $(this).attr("id", nowe_id);
-                });
-                var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
-                var nowe_id = "switch_protocol-" + nr_wiersza;
-                nowy_przycisk.attr("id", nowe_id);
-                nowy_przycisk.addClass("protocol" + nr_wiersza);
-                
-                nowy_przycisk.find("span").text("Bez nazwy " + nr_wiersza);
-                nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
-                var remove_b = nowy_przycisk.find(".remove_button");
-                remove_b.attr("id", "remove_button-" + nr_wiersza);
-                remove_b.click(klick_usun_objekt);
-                nowy_przycisk.click(klick_przelacz_protokul);
-                zaladuj_protokol(nr_wiersza);
-                zmiana_odnosnikow_spisu_tresci(nr_wiersza);
-                nowy_przycisk.click();
+
+    var tabela_objektu = $("#objekt_nr").clone();
+    tabela_objektu.attr("id", "objekt_nr-" + nr_wiersza);
+    //alert("clon = " + tabela_objektu.attr("id"));
+
+    var ostatni = $("#pojemnik_na_objekty").find(".object").last();
+    tabela_objektu.addClass("protocol" + nr_wiersza);
+    tabela_objektu.insertAfter(ostatni);
+    tabela_objektu.find(".dynamic").each(function() {
+
+        console.log("zaczynam zmieniac wartosci id dla nowego wiersza ");
+        var stare_id = $(this).attr("id");
+        var nowe_id = stare_id + "-" + nr_wiersza;
+        //alert("stare id " +stare_id + "nowe_id "+nowe_id);
+        $(this).attr("id", nowe_id);
+    });
+    var nowy_przycisk = $("#protocol_switcher").find("#dodaj_object").clone();
+    var nowe_id = "switch_protocol-" + nr_wiersza;
+    nowy_przycisk.attr("id", nowe_id);
+    nowy_przycisk.addClass("protocol" + nr_wiersza);
+    nowy_przycisk.find("span").text("Bez nazwy " + nr_wiersza);
+    nowy_przycisk.insertAfter($("#protocol_switcher").find(".switch_button").last());
+    var remove_b = nowy_przycisk.find(".remove_button");
+    remove_b.attr("id", "remove_button-" + nr_wiersza);
+    remove_b.click(klick_usun_objekt);
+    nowy_przycisk.click(klick_przelacz_protokul);
+    zaladuj_protokol(nr_wiersza);
+    zmiana_odnosnikow_spisu_tresci(nr_wiersza);
+    nowy_przycisk.click();
 }
 
 function klick_przelacz_protokul() {
@@ -116,18 +167,14 @@ function przelacz_protokul(nr_protokolu) {
     $(".protocol_table_part").each(function() {
         $(this).addClass("ukryty_protokol");
     });
-    
-    $("#pojemnik_na_objekty").find("div.object").each(function(){
-       $(this).addClass("ukryte");
-       $("#objekt_nr-"+nr_protokolu).removeClass("ukryte");
+    $("#pojemnik_na_objekty").find("div.object").each(function() {
+        $(this).addClass("ukryte");
+        $("#objekt_nr-" + nr_protokolu).removeClass("ukryte");
     });
-    
-    $("body").attr("class", function(){
-    return this.toString().replace(/protocol\d+/,"");
-    
+    $("body").attr("class", function() {
+        return this.toString().replace(/protocol\d+/, "");
     });
-    
-    $("body").addClass("protocol"+nr_protokolu);
+    $("body").addClass("protocol" + nr_protokolu);
     $("#tables_object" + nr_protokolu).removeClass("ukryty_protokol");
 }
 function zaladuj_protokol(nr_protokolu) {
@@ -228,25 +275,23 @@ function zaladuj_protokol(nr_protokolu) {
 }
 
 
- function zmiana_nazwy_objektu() {
-     //alert("zmiana nazwy");
-                            var text = $(this).val();
-                            //alert("text = " + text);
-                            var nr_protokolu=pobierz_nr_protokolu(this);
-                            
-                            var nr = $(this).parent("td").parent("tr").find(
-                                    "td").first().html();
-                            $("#charakterystyka_nazwa_obiektu-" + nr_protokolu)
-                                    .text(text);
-                            $("#charakterystyka_nr_obiektu-" + nr_protokolu)
-                                    .text(nr_protokolu);
-                            $("#switch_protocol-"+nr_protokolu).find("span").text(text);
-                            
-                            $("#li_object_nr-"+nr_protokolu).find(".li_nazwa_objectu").text(text);
-                            // console.log("wpisalem nazwe ob " + nr_protokolu);
-                        }
-                        
-function pobierz_nr_protokolu(el){
+function zmiana_nazwy_objektu() {
+//alert("zmiana nazwy");
+    var text = $(this).val();
+    //alert("text = " + text);
+    var nr_protokolu = pobierz_nr_protokolu(this);
+    var nr = $(this).parent("td").parent("tr").find(
+            "td").first().html();
+    $("#charakterystyka_nazwa_obiektu-" + nr_protokolu)
+            .text(text);
+    $("#charakterystyka_nr_obiektu-" + nr_protokolu)
+            .text(nr_protokolu);
+    $("#switch_protocol-" + nr_protokolu).find("span").text(text);
+    $("#li_object_nr-" + nr_protokolu).find(".li_nazwa_objectu").text(text);
+    // console.log("wpisalem nazwe ob " + nr_protokolu);
+}
+
+function pobierz_nr_protokolu(el) {
     var nr_protokolu = parseInt($(el).attr("id").toString().split("-")[1].toString());
     return nr_protokolu;
 }
@@ -367,7 +412,7 @@ function remove_object(nr_objektu) {
         $("#" + protocol_id).html(" ");
         $("#objekt_nr-" + nr_objektu).remove();
         $("#switch_protocol-" + nr_objektu).remove();
-        $("#li_object_nr-"+nr_objektu).remove();
+        $("#li_object_nr-" + nr_objektu).remove();
         $("#switch_protocol-1").click();
     }
 
@@ -381,17 +426,15 @@ function add_new_object() {
 
     var nrWiersza = parseInt($("#pojemnik_na_objekty").find(".object").last().attr("id").toString().split("-")[1]);
     if (nrWiersza === 10) {
-          return;
+        return;
     }
-    
-    var nowyNrWiersza=nrWiersza+1;
-    var nowy_wiersz_wykazu = $("#lista_objektow").find("li").first().clone();
-    var nowe_id = nowy_wiersz_wykazu.attr("id").toString().split("-")[0]+"-"+nowyNrWiersza;
-    nowy_wiersz_wykazu.attr("id",nowe_id);
-    nowy_wiersz_wykazu.find(".li_nazwa_objectu").html("Bez nazwy "+nowyNrWiersza);
-    nowy_wiersz_wykazu.insertAfter($("#lista_objektow").find("li").last());
-    
 
+    var nowyNrWiersza = nrWiersza + 1;
+    var nowy_wiersz_wykazu = $("#lista_objektow").find("li").first().clone();
+    var nowe_id = nowy_wiersz_wykazu.attr("id").toString().split("-")[0] + "-" + nowyNrWiersza;
+    nowy_wiersz_wykazu.attr("id", nowe_id);
+    nowy_wiersz_wykazu.find(".li_nazwa_objectu").html("Bez nazwy " + nowyNrWiersza);
+    nowy_wiersz_wykazu.insertAfter($("#lista_objektow").find("li").last());
     dodaj_wiesz_listy_objektow(nowyNrWiersza);
     // zaladuj_protokol(nrWiersza + 1);
 

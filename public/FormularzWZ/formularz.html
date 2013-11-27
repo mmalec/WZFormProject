@@ -224,7 +224,7 @@
         </style>
     </head>
     <body lang="PL" link="blue" vlink="purple">
-       
+
         <div id="komunikat">
             <div>Komunikat o wersji:<br>
                 <h2>Formularz wykorzystuje funkcje nie obsługiwane przez twoją przeglądarkę<br>
@@ -236,51 +236,50 @@
         </div> 
 
 
-         <div id="menu">
-             
-             <!--<div id="menu_top">
+        <div id="menu">
+
+            <!-- <div id="menu_top">
                      <div id="komentarz">działa aaaaaaaaaaaaaaaaa</div>
                          <div id="pola"></div>
                          <div id="polach"></div>
                          <h2 id="pouchdb">Press!</h2>
-                         <div id="wynik"></div>
-                 <div><input  id="kontrola" type="submit" value="Kontrola formularza"  style="display: none;"/></div>
+                         <div id="wynik"></div> -->
 
-                 <div style="margin-top: 0px; background-color: green">dklsadslkadslka</div> -->
-
+            <div style="margin-top: 0px; background-color: green">dklsadslkadslka</div> 
 
 
 
-           
-             <div id="protocol_switcher"  >
 
-                 <div id="dodaj_object" class="switch_button ">
-                     <span>+</span>
-                     <div id="usun_object" class="remove_button" title="Usuń object">X</div>  
-                 </div>
 
-             </div>
+            <div id="protocol_switcher"  >
 
-             <div class="tois Treścip_menu_class" id="spis_tresci_top">
-                 Nawigacja
+                <div id="dodaj_object" class="switch_button ">
+                    <span>+</span>
+                    <div id="usun_object" class="remove_button" title="Usuń object">X</div>  
+                </div>
 
-             </div>
+            </div>
 
-         </div> 
+            <div class="tois Treścip_menu_class" id="spis_tresci_top">
+                Nawigacja
+
+            </div>
+
+        </div> 
 
 
         <div id="left"  class="column">Left</div>
         <div id="kontener" class="column">
 
             <form id="formularz">
-
+           
                 <table id="miejsce_data" border="0" >
 
                     <tr id="tr_data">
                         <td  id="td_miejsce"><div class="editable" contenteditable="false" >
                                 ...................................,
                             </div></td>
-                        <td id="td_data"><input type="text" id="data_protokolu"  required="required"/></td>
+                        <td id="td_data"><input name="data" type="text" id="data_protokolu"  required="required"/></td>
                     </tr>
                 </table>
 
@@ -1278,7 +1277,12 @@
                 </div>
             </form>
         </div>
-        <div id="right" class="column">right
+        <div id="right" class="column">
+            <div><button  id="kontrola" type="submit" form="formularz" value="Kontrola formularza"> Kontola  </button></div>
+
+            <div id="lista_bledow">
+                <p>Lista błedów</p>
+            </div>
         </div>
 
         <div id="spis_tresci_more" >
@@ -1579,13 +1583,13 @@
 
         </div>
 
-       <!-- <div id="modal_nazwa_objektu" class="modal">
-            <form id="form_nazwa_objektu">
-                <p>Podaj nazwe objektu</p>
-                <input id="nazwa_objektu" type="text" required=""  />
-            </form>
-
-        </div> -->
+        <!-- <div id="modal_nazwa_objektu" class="modal">
+             <form id="form_nazwa_objektu">
+                 <p>Podaj nazwe objektu</p>
+                 <input id="nazwa_objektu" type="text" required=""  />
+             </form>
+ 
+         </div> -->
 
     </body>
 
