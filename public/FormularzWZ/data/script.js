@@ -58,42 +58,42 @@ function validate_forms() {
         // debug: true,
         focusInvalid: false,
         errorClass: 'validation-error',
-        messages:{
-            required: "*"
-        },
-        
-  
+        messages: {
+            required: "*"},
         showErrors: function(errorMap, errorList) {
-            
+            alert("showErrors");
+
             var i, elements;
-			for ( i = 0; this.errorList[i]; i++ ) {
-				var error = this.errorList[i];
-				if ( this.settings.highlight ) {
-					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
-				}
-				this.showLabel( error.element, error.message );
-			}
-			if ( this.errorList.length ) {
-				this.toShow = this.toShow.add( this.containers );
-			}
-			if ( this.settings.success ) {
-				for ( i = 0; this.successList[i]; i++ ) {
-					this.showLabel( this.successList[i] );
-				}
-			}
-			if ( this.settings.unhighlight ) {
-				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
-					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
-				}
-			}
-			this.toHide = this.toHide.not( this.toShow );
-			this.hideErrors();
-			this.addWrapper( this.toShow ).show();
-            
-            
+            for (i = 0; this.errorList[i]; i++) {
+                var error = this.errorList[i];
+                if (this.settings.highlight) {
+                    this.settings.highlight.call(this, error.element, this.settings.errorClass, this.settings.validClass);
+                }
+                this.showLabel(error.element, error.message);
+            }
+            if (this.errorList.length) {
+                this.toShow = this.toShow.add(this.containers);
+            }
+            if (this.settings.success) {
+                for (i = 0; this.successList[i]; i++) {
+                    this.showLabel(this.successList[i]);
+                }
+            }
+            if (this.settings.unhighlight) {
+                for (i = 0, elements = this.validElements(); elements[i]; i++) {
+                    this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, this.settings.validClass);
+                }
+            }
+            this.toHide = this.toHide.not(this.toShow);
+            this.hideErrors();
+            this.addWrapper(this.toShow).show();
+
+
+
+
             if (token) {
                 //alert("showErrors:");
-                
+
                 var i = 0;
                 var labelText = new Array(this.numberOfInvalids());
                 var lista_bledow = $("#lista_bledow");
@@ -107,9 +107,9 @@ function validate_forms() {
                     // labelText[i] = label;
                     // alert("name =" + id);
                     //  alert("value =" + value);
-                    
-                   // $("#"+id).addClass("validation-error")
-                   // defaultShowErrors();
+
+                    // $("#"+id).addClass("validation-error")
+                    // defaultShowErrors();
                     if (i === 1) {
                         lista_bledow.html("<a class=\"error\" href=\"#" + id + " \" >" + id + " </a>");
 
@@ -118,26 +118,30 @@ function validate_forms() {
                     var ostatni_listy_bledow = $("#lista_bledow").find("a").last();
 
                     var nowy_wiersz = ostatni_listy_bledow.clone();
-                    
+
                     nowy_wiersz.attr("href", "#" + id);
                     nowy_wiersz.text(id);
                     nowy_wiersz.insertAfter(ostatni_listy_bledow);
                     i++;
                 });
 
+
+
             }
+
+            validate_podtawa_prawna();
 
             token = true;
             $('#lista_bledow').find('a').click(function() {
                 //alert("dziala");
                 var $href = $(this).attr('href');
                 //var $anchor = $('#' + $href).offset();
-               // alert($href);
-               
-             // window.location=$href;
-              window.scrollTo(0,($($href).offset().top - 80));
-              //$($href).focuson();
-              //  $('html, body').animate({scrollTop: $($href).offset().top -60}, slow);
+                // alert($href);
+
+                // window.location=$href;
+                window.scrollTo(0, ($($href).offset().top - 80));
+                //$($href).focuson();
+                //  $('html, body').animate({scrollTop: $($href).offset().top -60}, slow);
                 //$($href).scrollTop(-100);
                 return false;
             });
@@ -151,6 +155,26 @@ function validate_forms() {
     //for (var i in vaildator.errorMap) {
     //  console.log(i, ":", validator.errorMap[i]);
     //}
+
+}
+
+function validate_podtawa_prawna() {
+    var liczba_ustaw = $("input:checkbox:checked.ustawa").length;
+    alert("liczba ustaw = " + liczba_ustaw);
+    if (liczba_ustaw === 0) {
+        $("#podstawa_prawna").addClass("validation-error");
+        var czy_jest_wpis = $("#lista_bledow").find("a[href=#podstawa_prawna]").length;
+        if (czy_jest_wpis === 0) {
+
+            var link = $("<a class=\"error\" href=\"#podstawa_prawna\" >Wybierz ustawę </a>");
+            link.insertBefore($("#lista_bledow").find("a").first());
+            alert("liczba ustaw = " + liczba_ustaw);
+        }
+    }
+    else {
+
+        $("#podstawa_prawna").removeClass("validation-error");
+    }
 
 }
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
