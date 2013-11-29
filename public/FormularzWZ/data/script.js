@@ -50,48 +50,103 @@ $(document).ready(function() {
 
 
 function validate_forms() {
-    alert("Dziala validacja");
+    //alert("Dziala validacja");
     var token = true;
+
+
     $("#formularz").validate({
-        invalidHandler: function(e, validator) {
-            alert("invalidHandler");
-//validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
-// for (var i = 0; i < validator.errorList.length; i++) {
-//    console.log(validator.errorList[i]);
-//   for (var i in vaildator.errorMap) {
-//  console.log(i, ":", validator.errorMap[i]);
-//   }
+        // debug: true,
+        focusInvalid: false,
+        errorClass: 'validation-error',
+        messages:{
+            required: "*"
         },
+        
+  
         showErrors: function(errorMap, errorList) {
+            
+            var i, elements;
+			for ( i = 0; this.errorList[i]; i++ ) {
+				var error = this.errorList[i];
+				if ( this.settings.highlight ) {
+					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
+				}
+				this.showLabel( error.element, error.message );
+			}
+			if ( this.errorList.length ) {
+				this.toShow = this.toShow.add( this.containers );
+			}
+			if ( this.settings.success ) {
+				for ( i = 0; this.successList[i]; i++ ) {
+					this.showLabel( this.successList[i] );
+				}
+			}
+			if ( this.settings.unhighlight ) {
+				for ( i = 0, elements = this.validElements(); elements[i]; i++ ) {
+					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
+				}
+			}
+			this.toHide = this.toHide.not( this.toShow );
+			this.hideErrors();
+			this.addWrapper( this.toShow ).show();
+            
+            
             if (token) {
-                alert("showErrors:");
+                //alert("showErrors:");
+                
                 var i = 0;
                 var labelText = new Array(this.numberOfInvalids());
                 var lista_bledow = $("#lista_bledow");
-                lista_bledow.html("<p class=\"valid_error\"></p>");
 
 
                 $.each(errorMap, function(id, value) {
 //I had to change the following line to get the for attribute of the 
 //label that matches the id of the name
-                    var label = $("label[for='" + $('#' + name).attr('id') + "']").text();
+
+                    // var label = $("label[for='" + $('#' + name).attr('id') + "']").text();
                     // labelText[i] = label;
                     // alert("name =" + id);
                     //  alert("value =" + value);
-                    var ostatni_listy_bledow = $("#lista_bledow").find("p").last();
+                    
+                   // $("#"+id).addClass("validation-error")
+                   // defaultShowErrors();
+                    if (i === 1) {
+                        lista_bledow.html("<a class=\"error\" href=\"#" + id + " \" >" + id + " </a>");
+
+
+                    }
+                    var ostatni_listy_bledow = $("#lista_bledow").find("a").last();
+
                     var nowy_wiersz = ostatni_listy_bledow.clone();
+                    
+                    nowy_wiersz.attr("href", "#" + id);
                     nowy_wiersz.text(id);
                     nowy_wiersz.insertAfter(ostatni_listy_bledow);
                     i++;
                 });
 
             }
-            token = true;
 
-           // alert("token " + token);
+            token = true;
+            $('#lista_bledow').find('a').click(function() {
+                //alert("dziala");
+                var $href = $(this).attr('href');
+                //var $anchor = $('#' + $href).offset();
+               // alert($href);
+               
+             // window.location=$href;
+              window.scrollTo(0,($($href).offset().top - 80));
+              //$($href).focuson();
+              //  $('html, body').animate({scrollTop: $($href).offset().top -60}, slow);
+                //$($href).scrollTop(-100);
+                return false;
+            });
+
+
+            // alert("token " + token);
         }
     });
-   // $("#kontrola").focus();
+    // $("#kontrola").focus();
     //validator.errorMap is an object mapping input names -> error messages
     //for (var i in vaildator.errorMap) {
     //  console.log(i, ":", validator.errorMap[i]);
@@ -149,6 +204,8 @@ function dodaj_wiesz_listy_objektow(nr_wiersza) {
     zaladuj_protokol(nr_wiersza);
     zmiana_odnosnikow_spisu_tresci(nr_wiersza);
     nowy_przycisk.click();
+    // $("#kontrola").click();
+
 }
 
 function klick_przelacz_protokul() {
@@ -158,6 +215,7 @@ function klick_przelacz_protokul() {
     var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
     $(this).addClass("switch_button_active");
     przelacz_protokul(nr_protokolu);
+
 }
 
 
@@ -176,6 +234,7 @@ function przelacz_protokul(nr_protokolu) {
     });
     $("body").addClass("protocol" + nr_protokolu);
     $("#tables_object" + nr_protokolu).removeClass("ukryty_protokol");
+    $("#kontrola").click();
 }
 function zaladuj_protokol(nr_protokolu) {
 
@@ -267,7 +326,7 @@ function zaladuj_protokol(nr_protokolu) {
                 //teraz selecty w rodzaju obiektu
 
 
-
+                $("#kontrola").click();
 
 
 
@@ -395,10 +454,13 @@ function zmiana_rodzaju_obiektu() {
 
 function klick_usun_objekt() {
 //alert($(this).attr("id"));
-    var nrWiersza = parseInt($(this).attr("id").toString().split("-")[1]);
-    //alert("usuwanie " + nrWiersza);
-    $(this).remove();
-    remove_object(nrWiersza);
+    var potwierdz = confirm("Potwierdź usunięcie \n " + $(this).parent("div").find("span").text());
+    if (potwierdz === true) {
+        var nrWiersza = parseInt($(this).attr("id").toString().split("-")[1]);
+        //alert("usuwanie " + nrWiersza);
+        $(this).remove();
+        remove_object(nrWiersza);
+    }
 }
 
 function remove_object(nr_objektu) {

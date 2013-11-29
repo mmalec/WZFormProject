@@ -53,15 +53,23 @@
     float: left;
     width: 20%;
     height: 80%;
-    z-index: 99;
+    //z-index: 99;
     
     
    
     
 }
 
-.valid_error{
+
+.validation-error{
     color: red;
+    border-color: red;
+    
+}
+
+a.error{
+    color: red;
+    
 }
 
 

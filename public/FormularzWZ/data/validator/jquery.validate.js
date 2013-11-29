@@ -279,13 +279,13 @@ $.extend($.validator, {
 	},
 
 	messages: {
-		required: "This field is required.",
+		required: "",
 		remote: "Please fix this field.",
 		email: "Please enter a valid email address.",
 		url: "Please enter a valid URL.",
 		date: "Please enter a valid date.",
 		dateISO: "Please enter a valid date (ISO).",
-		number: "Please enter a valid number.",
+		number: "Podaj liczbę.",
 		digits: "Please enter only digits.",
 		creditcard: "Please enter a valid credit card number.",
 		equalTo: "Please enter the same value again.",
@@ -462,6 +462,7 @@ $.extend($.validator, {
 		},
 
 		findLastActive: function() {
+                    //t("findLastActive");
 			var lastActive = this.lastActive;
 			return lastActive && $.grep(this.errorList, function( n ) {
 				return n.element.id === lastActive.id;
@@ -502,6 +503,7 @@ $.extend($.validator, {
 		},
 
 		reset: function() {
+                    //alert("Dziala reset");
 			this.successList = [];
 			this.errorList = [];
 			this.errorMap = {};
@@ -511,11 +513,13 @@ $.extend($.validator, {
 		},
 
 		prepareForm: function() {
+                    //alert("prepareForm");
 			this.reset();
 			this.toHide = this.errors().add( this.containers );
 		},
 
 		prepareElement: function( element ) {
+                  // alert("prepareElement");
 			this.reset();
 			this.toHide = this.errorsFor(element);
 		},
