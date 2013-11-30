@@ -129,7 +129,7 @@ function validate_forms() {
 
             }
 
-            validate_podtawa_prawna();
+            validate_podstawa_prawna();
 
             token = true;
             $('#lista_bledow').find('a').click(function() {
@@ -158,7 +158,7 @@ function validate_forms() {
 
 }
 
-function validate_podtawa_prawna() {
+function validate_podstawa_prawna() {
     var liczba_ustaw = $("input:checkbox:checked.ustawa").length;
     alert("liczba ustaw = " + liczba_ustaw);
     if (liczba_ustaw === 0) {
