@@ -46,22 +46,54 @@ $(document).ready(function() {
     });
     $("div.editable").click(make_div_editable);
     $("#kontrola").click(validate_forms);
+
 });
-
-
 function validate_forms() {
     //alert("Dziala validacja");
-    var token = true;
 
+    window.token = true;
+    //token = true;
+
+    jQuery.validator.addClassRules({
+        ustawa: {
+            required: function(element) {
+              //  $("input:checkbox:checked.ustawa").each(function(){
+                    
+                //  $("#formularz").validate().element(this); 
+               // });
+                if ($("input:checkbox:checked.ustawa").length == 0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            },
+            minlength: 1,
+            
+        }
+
+    });
 
     $("#formularz").validate({
-        // debug: true,
+        debug: true,
         focusInvalid: false,
         errorClass: 'validation-error',
         messages: {
-            required: "*"},
+            required: "*",
+            ustawa: "*"
+        },
+        // onkeyup: function(){
+        //$("#kontrola").click();
+        // },
+        //onfocusout: function(){
+        //  $("#kontrola").click();
+        //},
         showErrors: function(errorMap, errorList) {
-            alert("showErrors");
+            // alert("token= " + window.token);
+            //alert("token =" + token);
+            //this.prepareForm();
+
+
 
             var i, elements;
             for (i = 0; this.errorList[i]; i++) {
@@ -70,8 +102,19 @@ function validate_forms() {
                     this.settings.highlight.call(this, error.element, this.settings.errorClass, this.settings.validClass);
                 }
                 this.showLabel(error.element, error.message);
+                var lista_bledow = $("#lista_bledow");
+                var czy_jest_wpis = $("#lista_bledow").find("a[href=#" + error.element.id + "]").length;
+                // alert("czy_jest_wpis = " + czy_jest_wpis);
+                if (czy_jest_wpis === 0) {
+                    var ostatni_listy_bledow = $("#lista_bledow").find("li").first();
+                    var nowy_wiersz = ostatni_listy_bledow.clone();
+                    nowy_wiersz.find("a").attr("href", "#" + error.element.id);
+                    nowy_wiersz.find("a").text(error.element.id);
+                    nowy_wiersz.insertBefore(ostatni_listy_bledow);
+                }
             }
             if (this.errorList.length) {
+                //alert("errorList.length ="+errorList.length);
                 this.toShow = this.toShow.add(this.containers);
             }
             if (this.settings.success) {
@@ -82,73 +125,62 @@ function validate_forms() {
             if (this.settings.unhighlight) {
                 for (i = 0, elements = this.validElements(); elements[i]; i++) {
                     this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, this.settings.validClass);
+                    // alert("el = " + elements[i].id);
+                    $("#lista_bledow").find("a[href=#" + elements[i].id + "]").parent("li").remove();
                 }
             }
             this.toHide = this.toHide.not(this.toShow);
             this.hideErrors();
             this.addWrapper(this.toShow).show();
-
-
-
-
-            if (token) {
-                //alert("showErrors:");
-
+            //alert("showErrors:");
+            if (window.token === true) {
+                window.token = false;
                 var i = 0;
                 var labelText = new Array(this.numberOfInvalids());
                 var lista_bledow = $("#lista_bledow");
-
-
                 $.each(errorMap, function(id, value) {
-//I had to change the following line to get the for attribute of the 
-//label that matches the id of the name
 
-                    // var label = $("label[for='" + $('#' + name).attr('id') + "']").text();
-                    // labelText[i] = label;
-                    // alert("name =" + id);
-                    //  alert("value =" + value);
-
-                    // $("#"+id).addClass("validation-error")
-                    // defaultShowErrors();
-                    if (i === 1) {
-                        lista_bledow.html("<a class=\"error\" href=\"#" + id + " \" >" + id + " </a>");
-
-
+                    if (i === 0) {
+                        lista_bledow.html("<ol><li><a class=\"error\" href=\"#" + id + "\">" + id + " </a></li></ol>");
                     }
-                    var ostatni_listy_bledow = $("#lista_bledow").find("a").last();
 
-                    var nowy_wiersz = ostatni_listy_bledow.clone();
+                    var czy_jest_wpis = $("#lista_bledow").find("a[href=#" + id + "]").length;
+                    // alert("czy_jest_wpis = " + czy_jest_wpis);
+                    if (czy_jest_wpis === 0) {
+                        var ostatni_listy_bledow = $("#lista_bledow").find("li").last();
+                        var nowy_wiersz = ostatni_listy_bledow.clone();
+                        nowy_wiersz.find("a").attr("href", "#" + id);
+                        nowy_wiersz.find("a").text(id);
+                        nowy_wiersz.insertAfter(ostatni_listy_bledow);
+                    }
 
-                    nowy_wiersz.attr("href", "#" + id);
-                    nowy_wiersz.text(id);
-                    nowy_wiersz.insertAfter(ostatni_listy_bledow);
+
                     i++;
                 });
+                //validate_podstawa_prawna();
 
 
 
+                $('#lista_bledow').find('a').click(function() {
+                    //alert("dziala");
+                    var $href = $(this).attr('href');
+                    //var $anchor = $('#' + $href).offset();
+                    // alert($href);
+
+                    // window.location=$href;
+                    window.scrollTo(0, ($($href).offset().top - 80));
+                    $($href).focus();
+                    //$($href).focuson();
+                    //  $('html, body').animate({scrollTop: $($href).offset().top -60}, slow);
+                    //$($href).scrollTop(-100);
+                    return false;
+                });
+                // alert("token " + token);
             }
 
-            validate_podstawa_prawna();
-
-            token = true;
-            $('#lista_bledow').find('a').click(function() {
-                //alert("dziala");
-                var $href = $(this).attr('href');
-                //var $anchor = $('#' + $href).offset();
-                // alert($href);
-
-                // window.location=$href;
-                window.scrollTo(0, ($($href).offset().top - 80));
-                //$($href).focuson();
-                //  $('html, body').animate({scrollTop: $($href).offset().top -60}, slow);
-                //$($href).scrollTop(-100);
-                return false;
-            });
-
-
-            // alert("token " + token);
+            //alert("token " + token);
         }
+
     });
     // $("#kontrola").focus();
     //validator.errorMap is an object mapping input names -> error messages
@@ -160,15 +192,15 @@ function validate_forms() {
 
 function validate_podstawa_prawna() {
     var liczba_ustaw = $("input:checkbox:checked.ustawa").length;
-    alert("liczba ustaw = " + liczba_ustaw);
+    //alert("liczba ustaw = " + liczba_ustaw);
     if (liczba_ustaw === 0) {
         $("#podstawa_prawna").addClass("validation-error");
         var czy_jest_wpis = $("#lista_bledow").find("a[href=#podstawa_prawna]").length;
         if (czy_jest_wpis === 0) {
 
-            var link = $("<a class=\"error\" href=\"#podstawa_prawna\" >Wybierz ustawę </a>");
-            link.insertBefore($("#lista_bledow").find("a").first());
-            alert("liczba ustaw = " + liczba_ustaw);
+            var link = $("<li><a class=\"error\" href=\"#podstawa_prawna\" >Wybierz ustawę </a></li>");
+            link.insertBefore($("#lista_bledow").find("li").first());
+            // alert("liczba ustaw = " + liczba_ustaw);
         }
     }
     else {
@@ -178,26 +210,6 @@ function validate_podstawa_prawna() {
 
 }
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
-//alert('Dodaje nowy wiersz nr Wiersza to: ' + nr_wiersza);
-    /* var nazwa_objektu;
-     $("#modal_nazwa_objektu").dialog({
-     modal: true,
-     autoOpen: true,
-     buttons: {
-     Ok: function() {
-     
-     jQuery.validator.setDefaults({
-     debug: true,
-     success: "valid"
-     });
-     var form = $("#form_nazwa_objektu");
-     form.validate();
-     
-     alert("Valid: " + form.valid());
-     $(this).dialog("close");
-     }
-     }
-     }); */
 
 
     var tabela_objektu = $("#objekt_nr").clone();
@@ -239,7 +251,6 @@ function klick_przelacz_protokul() {
     var nr_protokolu = parseInt($(this).attr("id").toString().split("-")[1]);
     $(this).addClass("switch_button_active");
     przelacz_protokul(nr_protokolu);
-
 }
 
 
@@ -351,9 +362,6 @@ function zaladuj_protokol(nr_protokolu) {
 
 
                 $("#kontrola").click();
-
-
-
             });
 }
 
@@ -522,31 +530,6 @@ function add_new_object() {
     nowy_wiersz_wykazu.find(".li_nazwa_objectu").html("Bez nazwy " + nowyNrWiersza);
     nowy_wiersz_wykazu.insertAfter($("#lista_objektow").find("li").last());
     dodaj_wiesz_listy_objektow(nowyNrWiersza);
-    // zaladuj_protokol(nrWiersza + 1);
-
-    /*
-     * var protocol_id = "tables_object"+nrWierszaInt;
-     * console.log("protocol_id=" + protocol_id);
-     * $("#"+protocol_id).load('object_protocol.html', function(){
-     * $("div.editable").click(make_div_editable);
-     * 
-     * 
-     * //zmiana wszystkich id $("#"+protocol_id).find("table").each( function(){
-     * var stare_id = $(this).attr("id"); var nowe_id =
-     * stare_id+"_"+nrWierszaInt; $(this).attr("id", nowe_id); });
-     * 
-     * 
-     * 
-     * pokarz_wybrane_wiersze_w_tabeli();
-     * 
-     * //zmienia nazwy na potrzeby select zaladuj_protokol(nrWierszaInt); $(
-     * "table.dynamic").find( "input[type=checkbox]" ).unbind("change",
-     * "pokarz_wybrane_wiersze_w_tabeli" ); $( "table.dynamic").find(
-     * "input[type=checkbox]" ).change(pokarz_wybrane_wiersze_w_tabeli ); });
-     */
-
-    // $(this).remove();
-    // $(".dodaj_object").click(add_new_object);
 }
 
 function make_div_editable() {
@@ -630,7 +613,7 @@ function oblicz_watrosci_wymagane() {
     var nr_protokolu = $(this).attr("id").toString().split("-")[1].toString();
     console.log("dziala obliczanie wart wymaganych dla protokolu nr = " + nr_protokolu);
     czysc_wymagane(nr_protokolu);
-    $("#kontrola").click();
+    //$("#kontrola").click();
     var kategoria_objektu = $('#kategoria_objektu-' + nr_protokolu).find(
             "option:selected").val();
     var wysokosc_budynku = $("#wysokosc_budkunku-" + nr_protokolu).find(

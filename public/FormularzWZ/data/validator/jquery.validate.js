@@ -236,6 +236,7 @@ $.extend($.validator, {
 			}
 		},
 		onfocusout: function( element, event ) {
+           // alert("onfocusout");
 			if ( !this.checkable(element) && (element.id in this.submitted || !this.optional(element)) ) {
 				this.element(element);
 			}
@@ -243,7 +244,8 @@ $.extend($.validator, {
 		onkeyup: function( element, event ) {
 			if ( event.which === 9 && this.elementValue(element) === "" ) {
 				return;
-			} else if ( element.id in this.submitted || element === this.lastElement ) {
+			} 
+                        else if ( element.id in this.submitted || element === this.lastElement ) {
 				this.element(element);
 			}
 		},
@@ -369,21 +371,26 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/element
 		element: function( element ) {
+                   // alert("element");
 			element = this.validationTargetFor( this.clean( element ) );
 			this.lastElement = element;
 			this.prepareElement( element );
 			this.currentElements = $(element);
 			var result = this.check( element ) !== false;
 			if ( result ) {
+                            // alert("numberOfInvalids=" + result);
 				delete this.invalid[element.id];
 			} else {
+                           // alert("invalid=" );
 				this.invalid[element.id] = true;
 			}
 			if ( !this.numberOfInvalids() ) {
+                           //  alert("numberOfInvalids=");
 				// Hide error containers on last error
 				this.toHide = this.toHide.add( this.containers );
 			}
 			this.showErrors();
+                       
 			return result;
 		},
 
@@ -392,7 +399,7 @@ $.extend($.validator, {
 			if ( errors ) {
 				// add items to error list and map
 				$.extend( this.errorMap, errors );
-				this.errorList = [];
+				//this.errorList = [];
 				for ( var id in errors ) {
 					this.errorList.push({
 						message: errors[id],
@@ -413,6 +420,7 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Validator/resetForm
 		resetForm: function() {
+                   // alert("resetForm");
 			if ( $.fn.resetForm ) {
 				$(this.currentForm).resetForm();
 			}
@@ -448,6 +456,7 @@ $.extend($.validator, {
 		},
 
 		focusInvalid: function() {
+           // alert("focusInvalid");
 			if ( this.settings.focusInvalid ) {
 				try {
 					$(this.findLastActive() || this.errorList.length && this.errorList[0].element || [])
@@ -470,6 +479,7 @@ $.extend($.validator, {
 		},
 
 		elements: function() {
+           // alert("elements");
 			var validator = this,
 				rulesCache = {};
 
@@ -494,6 +504,7 @@ $.extend($.validator, {
 		},
 
 		clean: function( selector ) {
+            //alert("clean");
 			return $(selector)[0];
 		},
 
@@ -503,7 +514,7 @@ $.extend($.validator, {
 		},
 
 		reset: function() {
-                    //alert("Dziala reset");
+                   // alert("Dziala reset");
 			this.successList = [];
 			this.errorList = [];
 			this.errorMap = {};
@@ -513,7 +524,7 @@ $.extend($.validator, {
 		},
 
 		prepareForm: function() {
-                    //alert("prepareForm");
+                   // alert("prepareForm");
 			this.reset();
 			this.toHide = this.errors().add( this.containers );
 		},
@@ -539,6 +550,7 @@ $.extend($.validator, {
 		},
 
 		check: function( element ) {
+            //alert("check");
 			element = this.validationTargetFor( this.clean( element ) );
 
 			var rules = $(element).rules();
@@ -674,6 +686,7 @@ $.extend($.validator, {
 		},
 
 		invalidElements: function() {
+           // alert("invalidElements");
 			return $(this.errorList).map(function() {
 				return this.element;
 			});

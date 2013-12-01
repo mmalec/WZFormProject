@@ -67,6 +67,14 @@
     
 }
 
+.validation-error input{
+    border-style: solid;
+    border-color: #c00;
+    border-width: 2px;
+    display: inline-block;
+
+}
+
 a.error{
     color: red;
     
