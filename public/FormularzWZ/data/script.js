@@ -46,6 +46,9 @@ $(document).ready(function() {
     });
     $("div.editable").click(make_div_editable);
     $("#kontrola").click(validate_forms);
+    $(".ustawa").change(function() {
+        $("#kontrola").submit();
+    });
 
 });
 function validate_forms() {
@@ -57,11 +60,8 @@ function validate_forms() {
     jQuery.validator.addClassRules({
         ustawa: {
             required: function(element) {
-              //  $("input:checkbox:checked.ustawa").each(function(){
-                    
-                //  $("#formularz").validate().element(this); 
-               // });
-                if ($("input:checkbox:checked.ustawa").length == 0) {
+                if ($("input:checkbox:checked.ustawa").length === 0) {
+
                     return true;
                 }
                 else {
@@ -69,13 +69,12 @@ function validate_forms() {
                 }
             },
             minlength: 1,
-            
         }
 
     });
 
     $("#formularz").validate({
-        debug: true,
+        debug: false,
         focusInvalid: false,
         errorClass: 'validation-error',
         messages: {
@@ -103,13 +102,21 @@ function validate_forms() {
                 }
                 this.showLabel(error.element, error.message);
                 var lista_bledow = $("#lista_bledow");
-                var czy_jest_wpis = $("#lista_bledow").find("a[href=#" + error.element.id + "]").length;
-                // alert("czy_jest_wpis = " + czy_jest_wpis);
+                 var czy_jest_wpis = $("#lista_bledow").find("[title=\"" + error.message + "\"]").length;
+                // alert("czy_jest_wpis = " + error.message);
                 if (czy_jest_wpis === 0) {
+                     var title = error.element.id;
+                    var regExp = new RegExp(/\w/); 
+                    if(regExp.test(error.message.toString())){
+                      title = error.message.toString();
+                    
+                    }
+                    
                     var ostatni_listy_bledow = $("#lista_bledow").find("li").first();
                     var nowy_wiersz = ostatni_listy_bledow.clone();
                     nowy_wiersz.find("a").attr("href", "#" + error.element.id);
-                    nowy_wiersz.find("a").text(error.element.id);
+                   nowy_wiersz.find("a").attr("title", error.message);
+                    nowy_wiersz.find("a").text(title);
                     nowy_wiersz.insertBefore(ostatni_listy_bledow);
                 }
             }
@@ -139,22 +146,31 @@ function validate_forms() {
                 var labelText = new Array(this.numberOfInvalids());
                 var lista_bledow = $("#lista_bledow");
                 $.each(errorMap, function(id, value) {
-
-                    if (i === 0) {
-                        lista_bledow.html("<ol><li><a class=\"error\" href=\"#" + id + "\">" + id + " </a></li></ol>");
+                    
+                    var title = id;
+                    var regExp = new RegExp(/\w/); 
+                    if(regExp.test(value.toString())){
+                      title = value;
+                    
                     }
 
-                    var czy_jest_wpis = $("#lista_bledow").find("a[href=#" + id + "]").length;
-                    // alert("czy_jest_wpis = " + czy_jest_wpis);
+                    if (i === 0) {
+                        lista_bledow.html("<ol><li><a class=\"error\" href=\"#" + id + "\" title=\"" + title + "\">" + title + " </a></li></ol>");
+                    }
+                   // alert("value" + value);
+                    var czy_jest_wpis = $("#lista_bledow").find("[title=\"" + title + "\"]").length;
+                    //alert("czy_jest_wpis = " + czy_jest_wpis +title);
                     if (czy_jest_wpis === 0) {
                         var ostatni_listy_bledow = $("#lista_bledow").find("li").last();
                         var nowy_wiersz = ostatni_listy_bledow.clone();
                         nowy_wiersz.find("a").attr("href", "#" + id);
-                        nowy_wiersz.find("a").text(id);
+                                 
+                         nowy_wiersz.find("a").attr("title",  title);
+                        nowy_wiersz.find("a").text(title);
                         nowy_wiersz.insertAfter(ostatni_listy_bledow);
                     }
 
-
+                   
                     i++;
                 });
                 //validate_podstawa_prawna();
