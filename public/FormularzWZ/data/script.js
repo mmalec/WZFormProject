@@ -88,7 +88,7 @@ function validate_forms() {
         //  $("#kontrola").click();
         //},
         showErrors: function(errorMap, errorList) {
-            // alert("token= " + window.token);
+            //alert("token= " + window.token);
             //alert("token =" + token);
             //this.prepareForm();
 
