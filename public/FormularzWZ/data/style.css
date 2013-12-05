@@ -67,7 +67,7 @@
     
 }
 
-.validation-error input{
+.validation-error  input[type="checkbox"]:parent{
     border-style: solid;
     border-color: #c00;
     border-width: 2px;

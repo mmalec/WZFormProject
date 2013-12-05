@@ -46,32 +46,42 @@ $(document).ready(function() {
     });
     $("div.editable").click(make_div_editable);
     $("#kontrola").click(validate_forms);
-    $(".ustawa").change(function() {
-        $("#kontrola").submit();
-    });
-
+   
 });
 function validate_forms() {
     //alert("Dziala validacja");
 
     window.token = true;
     //token = true;
+    /*
+     jQuery.validator.addClassRules({
+     ustawa: {
+     required: function(element) {
+     if ($("input:checkbox:checked.ustawa").length === 0) {
+     
+     return true;
+     }
+     else {
+     return false;
+     }
+     },
+     minlength: 1,
+     }
+     
+     }); */
+    jQuery.validator.addMethod('ustawa', function(value) {
+        //alert("dziala");
+          $('.ustawa').each(function(){
+                 $(this).parent("td").removeClass("validation-error"); 
+              });
+        return $('.ustawa:checked').size() > 0;
+    }, 'Pick one or more');
+    var checkboxes = $('.ustawa');
+    var checkbox_names = $.map(checkboxes, function(e, i) {
+        return $(e).attr("id");
+    }).join(" ");
+   
 
-    jQuery.validator.addClassRules({
-        ustawa: {
-            required: function(element) {
-                if ($("input:checkbox:checked.ustawa").length === 0) {
-
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            },
-            minlength: 1,
-        }
-
-    });
 
     $("#formularz").validate({
         debug: false,
@@ -81,12 +91,25 @@ function validate_forms() {
             required: "*",
             ustawa: "*"
         },
+        groups: {ustawa: checkbox_names},
+        errorPlacement: function(error, element) {
+          
+             if ($("#"+element.attr("id")).hasClass("ustawa")){
+              $('.ustawa').each(function(){
+                 $(this).parent("td").addClass("validation-error"); 
+              });
+             }
+             else
+               error.insertAfter(element);
+        },
+        
         // onkeyup: function(){
         //$("#kontrola").click();
         // },
         //onfocusout: function(){
         //  $("#kontrola").click();
         //},
+        
         showErrors: function(errorMap, errorList) {
             // alert("token= " + window.token);
             //alert("token =" + token);
@@ -102,20 +125,20 @@ function validate_forms() {
                 }
                 this.showLabel(error.element, error.message);
                 var lista_bledow = $("#lista_bledow");
-                 var czy_jest_wpis = $("#lista_bledow").find("[title=\"" + error.message + "\"]").length;
+                var czy_jest_wpis = $("#lista_bledow").find("[title=\"" + error.message + "\"]").length;
                 // alert("czy_jest_wpis = " + error.message);
                 if (czy_jest_wpis === 0) {
-                     var title = error.element.id;
-                    var regExp = new RegExp(/\w/); 
-                    if(regExp.test(error.message.toString())){
-                      title = error.message.toString();
-                    
+                    var title = error.element.id;
+                    var regExp = new RegExp(/\w/);
+                    if (regExp.test(error.message.toString())) {
+                        title = error.message.toString();
+
                     }
-                    
+
                     var ostatni_listy_bledow = $("#lista_bledow").find("li").first();
                     var nowy_wiersz = ostatni_listy_bledow.clone();
                     nowy_wiersz.find("a").attr("href", "#" + error.element.id);
-                   nowy_wiersz.find("a").attr("title", error.message);
+                    nowy_wiersz.find("a").attr("title", error.message);
                     nowy_wiersz.find("a").text(title);
                     nowy_wiersz.insertBefore(ostatni_listy_bledow);
                 }
@@ -133,7 +156,13 @@ function validate_forms() {
                 for (i = 0, elements = this.validElements(); elements[i]; i++) {
                     this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, this.settings.validClass);
                     // alert("el = " + elements[i].id);
-                    $("#lista_bledow").find("a[href=#" + elements[i].id + "]").parent("li").remove();
+                  
+                var  title = $('#'+elements[i].id).attr("title");
+                    var regExp = new RegExp(/\w/);
+                    if (!regExp.test(title)) {
+                        title = elements[i].id ;
+                    }
+                    $("#lista_bledow").find("[title=\"" + title + "\"]").parent("li").remove();
                 }
             }
             this.toHide = this.toHide.not(this.toShow);
@@ -146,31 +175,31 @@ function validate_forms() {
                 var labelText = new Array(this.numberOfInvalids());
                 var lista_bledow = $("#lista_bledow");
                 $.each(errorMap, function(id, value) {
-                    
+
                     var title = id;
-                    var regExp = new RegExp(/\w/); 
-                    if(regExp.test(value.toString())){
-                      title = value;
-                    
+                    var regExp = new RegExp(/\w/);
+                    if (regExp.test(value.toString())) {
+                        title = value;
+
                     }
 
                     if (i === 0) {
                         lista_bledow.html("<ol><li><a class=\"error\" href=\"#" + id + "\" title=\"" + title + "\">" + title + " </a></li></ol>");
                     }
-                   // alert("value" + value);
+                    // alert("value" + value);
                     var czy_jest_wpis = $("#lista_bledow").find("[title=\"" + title + "\"]").length;
                     //alert("czy_jest_wpis = " + czy_jest_wpis +title);
                     if (czy_jest_wpis === 0) {
                         var ostatni_listy_bledow = $("#lista_bledow").find("li").last();
                         var nowy_wiersz = ostatni_listy_bledow.clone();
                         nowy_wiersz.find("a").attr("href", "#" + id);
-                                 
-                         nowy_wiersz.find("a").attr("title",  title);
+
+                        nowy_wiersz.find("a").attr("title", title);
                         nowy_wiersz.find("a").text(title);
                         nowy_wiersz.insertAfter(ostatni_listy_bledow);
                     }
 
-                   
+
                     i++;
                 });
                 //validate_podstawa_prawna();
