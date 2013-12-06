@@ -47,7 +47,13 @@ $(document).ready(function() {
     $("div.editable").click(make_div_editable);
     $("#kontrola").click(validate_forms);
    
+    $('.ustawa').each(function() {
+        $(this).click(function() {
+            $("#formularz").validate().element($('.art_ustawa_psp').first());
+        });
+    });
 });
+
 function validate_forms() {
     //alert("Dziala validacja");
 
@@ -71,16 +77,29 @@ function validate_forms() {
      }); */
     jQuery.validator.addMethod('ustawa', function(value) {
         //alert("dziala");
-          $('.ustawa').each(function(){
-                 $(this).parent("td").removeClass("validation-error"); 
-              });
+     
+        
+        $('.ustawa').each(function() {
+            $(this).parent("td").removeClass("validation-error");
+        });
         return $('.ustawa:checked').size() > 0;
     }, 'Pick one or more');
-    var checkboxes = $('.ustawa');
-    var checkbox_names = $.map(checkboxes, function(e, i) {
-        return $(e).attr("id");
-    }).join(" ");
-   
+    jQuery.validator.addMethod('art_ustawa_psp', function(value) {
+        //alert("dziala art");
+
+        $('.art_ustawa_psp').each(function() {
+            $(this).parent("td").removeClass("validation-error");
+        });
+        //alert($('#ustawa_psp').is(":checked"));
+        if (($('.art_ustawa_psp:checked').size() > 0) && ($('#ustawa_psp').is(":checked")===true)) return true;
+        else if (($('.art_ustawa_psp:checked').size() === 0) && ($('#ustawa_psp').is(":checked")===false)) return true;
+        else return false;
+    }, 'Pick one or more');
+    //var checkboxes = $('.ustawa');
+    //var checkbox_names = $.map(checkboxes, function(e, i) {
+    //    return $(e).attr("id");
+    //}).join(" ");
+
 
 
     $("#formularz").validate({
@@ -89,27 +108,37 @@ function validate_forms() {
         errorClass: 'validation-error',
         messages: {
             required: "*",
-            ustawa: "*"
+            // ustawa: "*"
         },
-        groups: {ustawa: checkbox_names},
+        rules: {
+            rodzaj_kontroli: {
+                required: true,
+                minlength: 1}
+        },
+        // groups: {ustawa: checkbox_names},
         errorPlacement: function(error, element) {
-          
-             if ($("#"+element.attr("id")).hasClass("ustawa")){
-              $('.ustawa').each(function(){
-                 $(this).parent("td").addClass("validation-error"); 
-              });
-             }
-             else
-               error.insertAfter(element);
+
+            if ($("#" + element.attr("id")).hasClass("ustawa")) {
+
+                $('.ustawa').each(function() {
+                    $(this).parent("td").addClass("validation-error");
+                });
+            }
+            else if ($("#" + element.attr("id")).hasClass("art_ustawa_psp")) {
+                $('.art_ustawa_psp').each(function() {
+                    $(this).parent("td").addClass("validation-error");
+                });
+            }
+            else
+                error.insertAfter(element);
         },
-        
         // onkeyup: function(){
         //$("#kontrola").click();
         // },
         //onfocusout: function(){
         //  $("#kontrola").click();
         //},
-        
+
         showErrors: function(errorMap, errorList) {
             // alert("token= " + window.token);
             //alert("token =" + token);
@@ -156,11 +185,11 @@ function validate_forms() {
                 for (i = 0, elements = this.validElements(); elements[i]; i++) {
                     this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, this.settings.validClass);
                     // alert("el = " + elements[i].id);
-                  
-                var  title = $('#'+elements[i].id).attr("title");
+
+                    var title = $('#' + elements[i].id).attr("title");
                     var regExp = new RegExp(/\w/);
                     if (!regExp.test(title)) {
-                        title = elements[i].id ;
+                        title = elements[i].id;
                     }
                     $("#lista_bledow").find("[title=\"" + title + "\"]").parent("li").remove();
                 }
@@ -234,26 +263,26 @@ function validate_forms() {
     //}
 
 }
-
-function validate_podstawa_prawna() {
-    var liczba_ustaw = $("input:checkbox:checked.ustawa").length;
-    //alert("liczba ustaw = " + liczba_ustaw);
-    if (liczba_ustaw === 0) {
-        $("#podstawa_prawna").addClass("validation-error");
-        var czy_jest_wpis = $("#lista_bledow").find("a[href=#podstawa_prawna]").length;
-        if (czy_jest_wpis === 0) {
-
-            var link = $("<li><a class=\"error\" href=\"#podstawa_prawna\" >Wybierz ustawę </a></li>");
-            link.insertBefore($("#lista_bledow").find("li").first());
-            // alert("liczba ustaw = " + liczba_ustaw);
-        }
-    }
-    else {
-
-        $("#podstawa_prawna").removeClass("validation-error");
-    }
-
-}
+/*
+ function validate_podstawa_prawna() {
+ var liczba_ustaw = $("input:checkbox:checked.ustawa").length;
+ //alert("liczba ustaw = " + liczba_ustaw);
+ if (liczba_ustaw === 0) {
+ $("#podstawa_prawna").addClass("validation-error");
+ var czy_jest_wpis = $("#lista_bledow").find("a[href=#podstawa_prawna]").length;
+ if (czy_jest_wpis === 0) {
+ 
+ var link = $("<li><a class=\"error\" href=\"#podstawa_prawna\" >Wybierz ustawę </a></li>");
+ link.insertBefore($("#lista_bledow").find("li").first());
+ // alert("liczba ustaw = " + liczba_ustaw);
+ }
+ }
+ else {
+ 
+ $("#podstawa_prawna").removeClass("validation-error");
+ }
+ 
+ } */
 function dodaj_wiesz_listy_objektow(nr_wiersza) {
 
 
